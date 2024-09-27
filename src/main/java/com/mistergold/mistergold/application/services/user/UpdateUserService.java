@@ -16,8 +16,8 @@ public class UpdateUserService implements UpdateUserUseCase {
     @Override
     public User update(User userNew, String id) {
         User userOld = searchUserPort.findById(id);
-        userOld.setName(userNew.getName());
-        userOld.setEmail(userNew.getEmail());
+        userOld.setName(userNew.getName() == null ? userOld.getName() : userNew.getName());
+        userOld.setEmail(userNew.getEmail() == null ? userOld.getEmail() : userNew.getEmail());
         return saveUserPort.save(userOld);
     }
 }

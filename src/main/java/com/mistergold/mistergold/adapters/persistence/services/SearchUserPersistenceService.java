@@ -22,4 +22,10 @@ public class SearchUserPersistenceService implements SearchUserPort {
     public User findByEmail(String email) {
         return mapper.mapToDomain(repository.findByEmail(email).orElseThrow());
     }
+
+    @Override
+    public Boolean checkEmailExists(String email) {
+        if (repository.findByEmail(email).isPresent()) return true;
+        return false;
+    }
 }

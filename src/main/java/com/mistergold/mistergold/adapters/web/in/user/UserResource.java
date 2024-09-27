@@ -13,10 +13,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/usuarios")
 @Tag(name = "usuarios")
@@ -34,8 +33,8 @@ public class UserResource {
             @ApiResponse(responseCode = "422", description = "Dados da requisição inválidos!"),
             @ApiResponse(responseCode = "500", description = "Falha no serviço de buscar usuário!"),
     })
-    @GetMapping("/{id}/porid")
-    public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+    @GetMapping("/{id}/id")
+    public ResponseEntity<UserDTO> findById(@PathVariable(name = "id") String id) {
         return ResponseEntity.ok().body(mapper.mapToDTO(searchUserUseCase.findById(id)));
     }
 
@@ -46,8 +45,8 @@ public class UserResource {
             @ApiResponse(responseCode = "422", description = "Dados da requisição inválidos!"),
             @ApiResponse(responseCode = "500", description = "Falha no serviço de buscar usuário!"),
     })
-    @GetMapping("/{email}/poremail")
-    public ResponseEntity<UserDTO> findByEmail(@PathVariable String email) {
+    @GetMapping("/{email}/email")
+    public ResponseEntity<UserDTO> findByEmail(@PathVariable(name = "email") String email) {
         return ResponseEntity.ok().body(mapper.mapToDTO(searchUserUseCase.findByEmail(email)));
     }
 
@@ -59,7 +58,7 @@ public class UserResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de salvar usuário!"),
     })
     @PostMapping("/salvar")
-    public ResponseEntity<UserDTO> save(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> save(@RequestBody UserDTO userDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(saveUserUseCase.save(mapper.mapToDomain(userDTO))));
     }
 
@@ -71,8 +70,8 @@ public class UserResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de atualizar usuário!"),
     })
     @PutMapping("/{id}/atualizar")
-    public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO, String id) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(updateUserUseCase.update(mapper.mapToDomain(userDTO), id)));
+    public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO, @PathVariable(name = "id") String id) {
+        return ResponseEntity.ok().body(mapper.mapToDTO(updateUserUseCase.update(mapper.mapToDomain(userDTO), id)));
     }
 
     @Operation(summary = "Desativa um usuário na base de dados pelo Id.", method = "DELETE")
@@ -83,7 +82,7 @@ public class UserResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de desativar usuário!"),
     })
     @DeleteMapping("/{id}/desativar")
-    public ResponseEntity<UserDTO> inactivate(@PathVariable String id) {
+    public ResponseEntity<UserDTO> inactivate(@PathVariable(name = "id") String id) {
         return ResponseEntity.ok().body(mapper.mapToDTO(deleteUserUseCase.inactivate(id)));
     }
 
@@ -95,7 +94,7 @@ public class UserResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de deletar usuário!"),
     })
     @DeleteMapping("/{id}/deletar")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") String id) {
         deleteUserUseCase.deleteById(id);
         return ResponseEntity.noContent().build();
     }
