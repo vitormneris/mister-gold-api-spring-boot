@@ -22,7 +22,7 @@ services:
       context: .
       dockerfile: Dockerfile  
     ports:
-        - 8080:8080
+        - 8080:8084
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://root:root@mongo:27017/mistergold?authSource=admin
     depends_on:
