@@ -4,6 +4,9 @@ import com.mistergold.mistergold.application.domain.user.User;
 import com.mistergold.mistergold.application.ports.in.user.SearchUserUseCase;
 import com.mistergold.mistergold.application.ports.out.user.SearchUserPort;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,5 +22,10 @@ public class SearchUserService implements SearchUserUseCase {
     @Override
     public User findByEmail(String email) {
         return searchUserPort.findByEmail(email);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return searchUserPort.findAll();
     }
 }

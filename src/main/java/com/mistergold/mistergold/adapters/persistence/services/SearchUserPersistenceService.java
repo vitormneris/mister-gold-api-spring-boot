@@ -5,6 +5,9 @@ import com.mistergold.mistergold.adapters.persistence.repositories.UserRepositor
 import com.mistergold.mistergold.application.domain.user.User;
 import com.mistergold.mistergold.application.ports.out.user.SearchUserPort;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,5 +30,10 @@ public class SearchUserPersistenceService implements SearchUserPort {
     public Boolean checkEmailExists(String email) {
         if (repository.findByEmail(email).isPresent()) return true;
         return false;
+    }
+
+    @Override
+    public List<User> findAll() {
+        return mapper.mapListToDomain(repository.findAll());
     }
 }

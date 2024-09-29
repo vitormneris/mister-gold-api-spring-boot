@@ -11,6 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,18 @@ public class UserResource {
     private final DeleteUserUseCase deleteUserUseCase;
     private final SaveUserUseCase saveUserUseCase;
     private final UserWebMapper mapper;
+
+    @Operation(summary = "Busca por um usuário na base de dados pelo Id.", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos!"),
+            @ApiResponse(responseCode = "422", description = "Dados da requisição inválidos!"),
+            @ApiResponse(responseCode = "500", description = "Falha no serviço de buscar usuário!"),
+    })
+    @GetMapping("/listartodos")
+    public ResponseEntity<List<UserDTO>> findAll() {
+        return ResponseEntity.ok().body(mapper.mapToDTO(searchUserUseCase.findAll()));
+    }
 
     @Operation(summary = "Busca por um usuário na base de dados pelo Id.", method = "GET")
     @ApiResponses(value = {
