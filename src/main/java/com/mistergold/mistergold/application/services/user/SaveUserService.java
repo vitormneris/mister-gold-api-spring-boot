@@ -5,6 +5,8 @@ import com.mistergold.mistergold.application.domain.user.User;
 import com.mistergold.mistergold.application.ports.in.user.SaveUserUseCase;
 import com.mistergold.mistergold.application.ports.out.user.SaveUserPort;
 import com.mistergold.mistergold.application.ports.out.user.SearchUserPort;
+import com.mistergold.mistergold.configuration.web.advice.exception.DataIntegratyViolationException;
+import com.mistergold.mistergold.configuration.web.enums.RunErrorEnum;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,8 +21,8 @@ public class SaveUserService implements SaveUserUseCase {
     private final SaveUserPort saveUserPort;
 
     @Override
-    public User save(User user) throws Exception {
-        if (searchUserPort.checkEmailExists(user.getEmail())) throw new Exception("ESTE EMAIL JÀ EXISTE NA BASE DE DADOS");
+    public User save(User user) {
+        if (searchUserPort.checkEmailExists(user.getEmail())) throw new DataIntegratyViolationException(RunErrorEnum.ERR0002);
 
         InfoActivation infoActivation = InfoActivation.builder()
             .creationDate(Instant.now())

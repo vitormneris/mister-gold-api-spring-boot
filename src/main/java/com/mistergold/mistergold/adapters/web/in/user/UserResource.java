@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -73,7 +74,7 @@ public class UserResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de salvar usuário!"),
     })
     @PostMapping("/salvar")
-    public ResponseEntity<UserDTO> save(@RequestBody UserDTO userDTO) throws Exception {
+    public ResponseEntity<UserDTO> save(@Valid @RequestBody UserDTO userDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(saveUserUseCase.save(mapper.mapToDomain(userDTO))));
     }
 
@@ -85,7 +86,7 @@ public class UserResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de atualizar usuário!"),
     })
     @PutMapping("/{id}/atualizar")
-    public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO, @PathVariable(name = "id") String id) {
+    public ResponseEntity<UserDTO> update(@Valid @RequestBody UserDTO userDTO, @PathVariable(name = "id") String id) {
         return ResponseEntity.ok().body(mapper.mapToDTO(updateUserUseCase.update(mapper.mapToDomain(userDTO), id)));
     }
 
@@ -110,7 +111,7 @@ public class UserResource {
     })
     @DeleteMapping("/{id}/deletar")
     public ResponseEntity<Void> delete(@PathVariable(name = "id") String id) {
-        deleteUserUseCase.deleteById(id);
+        deleteUserUseCase.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
