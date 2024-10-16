@@ -9,20 +9,12 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
 
-  frontend-app:
-    image: front-end
-    restart: always
-    ports:
-      - 80:80
-    depends_on:
-      - springboot-app
-
   springboot-app:
     build:
       context: .
       dockerfile: Dockerfile  
     ports:
-        - 8080:8084
+        - 8081:8084
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://root:root@mongo:27017/mistergold?authSource=admin
     depends_on:
