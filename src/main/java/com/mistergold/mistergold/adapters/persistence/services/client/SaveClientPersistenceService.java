@@ -1,4 +1,4 @@
-package com.mistergold.mistergold.adapters.persistence.services;
+package com.mistergold.mistergold.adapters.persistence.services.client;
 
 import com.mistergold.mistergold.adapters.persistence.mappers.ClientPersistenceMapper;
 import com.mistergold.mistergold.adapters.persistence.repositories.ClientRepository;

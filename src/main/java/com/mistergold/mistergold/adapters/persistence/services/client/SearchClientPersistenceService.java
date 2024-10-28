@@ -1,4 +1,4 @@
-package com.mistergold.mistergold.adapters.persistence.services;
+package com.mistergold.mistergold.adapters.persistence.services.client;
 
 import com.mistergold.mistergold.adapters.persistence.mappers.ClientPersistenceMapper;
 import com.mistergold.mistergold.adapters.persistence.repositories.ClientRepository;
@@ -31,8 +31,7 @@ public class SearchClientPersistenceService implements SearchClientPort {
 
     @Override
     public Boolean checkEmailExists(String email) {
-        if (clientRepository.findByEmail(email).isPresent()) return true;
-        return false; 
+        return clientRepository.findByEmail(email).isPresent();
     }
 
     @Override

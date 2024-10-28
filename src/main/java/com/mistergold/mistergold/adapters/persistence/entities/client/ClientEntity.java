@@ -16,5 +16,6 @@ import lombok.Setter;
 public class ClientEntity extends UserEntityAbstract {
     @Field(name = "telefone")
     private String phone;
+    @Field(name = "endereco")
     private AddressEntity address;
 }

@@ -1,5 +1,6 @@
-package com.mistergold.mistergold.adapters.persistence.services;
+package com.mistergold.mistergold.adapters.persistence.services.client;
 
+import com.mistergold.mistergold.adapters.persistence.entities.client.AddressEntity;
 import com.mistergold.mistergold.adapters.persistence.entities.client.ClientEntity;
 import com.mistergold.mistergold.adapters.persistence.mappers.ClientPersistenceMapper;
 import com.mistergold.mistergold.adapters.persistence.repositories.ClientRepository;
@@ -22,6 +23,18 @@ public class UpdateClientPersistenceService implements UpdateClientPort {
         ClientEntity clientOld = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0001));
         clientOld.setName(clientNew.getName() == null ? clientOld.getName() : clientNew.getName());
         clientOld.setEmail(clientNew.getEmail() == null ? clientOld.getEmail() : clientNew.getEmail());
+        clientOld.setPhone(clientNew.getPhone() == null ? clientOld.getPhone() : clientNew.getPhone());
+
+        clientOld.setAddress(clientNew.getAddress() == null ? clientOld.getAddress() :
+            AddressEntity.builder()
+                    .state(clientNew.getAddress().getState() == null ? clientOld.getAddress().getState() : clientNew.getAddress().getState())
+                    .city(clientNew.getAddress().getCity() == null ? clientOld.getAddress().getCity() : clientNew.getAddress().getCity())
+                    .neighborhood(clientNew.getAddress().getNeighborhood() == null ? clientOld.getAddress().getNeighborhood() : clientNew.getAddress().getNeighborhood())
+                    .street(clientNew.getAddress().getStreet() == null ? clientOld.getAddress().getStreet() : clientNew.getAddress().getStreet())
+                    .postalCode(clientNew.getAddress().getPostalCode() == null ? clientOld.getAddress().getPostalCode() : clientNew.getAddress().getPostalCode())
+                    .number(clientNew.getAddress().getNumber() == null ? clientOld.getAddress().getNumber() : clientNew.getAddress().getNumber())
+                    .build());
+
         return mapper.mapToDomain(clientRepository.save(clientOld));
     }
 }

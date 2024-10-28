@@ -7,7 +7,6 @@ import com.mistergold.mistergold.application.ports.out.client.DeleteClientPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class DeleteClientService implements DeleteClientUseCase {
