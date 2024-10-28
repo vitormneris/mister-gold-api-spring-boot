@@ -1,4 +1,4 @@
-package com.mistergold.mistergold.adapters.persistence.entities.product;
+package com.mistergold.mistergold.adapters.persistence.entities.category;
 
 import com.mistergold.mistergold.application.domain.InfoActivation;
 import lombok.AllArgsConstructor;
@@ -13,27 +13,16 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "produtos")
-public class ProductEntity {
+@Document(collection = "categorias")
+public class CategoryEntity {
     @Id
     private String id;
     @Field(name = "nome")
     private String name;
-    @Field(name = "url_imagem")
+    @Field(name = "imagem_url")
     private String imageUrl;
-    @Field(name = "descricao")
+    @Field(name = "description")
     private String description;
-    @Field(name = "tamanho")
-    private Double size;
-    @Field(name = "cor")
-    private String color;
-    @Field(name = "peso")
-    private Double weight;
-    private String material;
-    @Field(name = "preco")
-    private Double price;
-    @Field(name = "quantidade")
-    private Integer quantity;
     @Field(name = "status_de_ativacao")
     private InfoActivation infoActivation;
 }

@@ -22,6 +22,10 @@ public class UpdateProductPersistenceService implements UpdateProductPort {
 
         productOld.setName(productNew.getName() == null ? productOld.getName() : productNew.getName());
         productOld.setImageUrl(productNew.getImageUrl() == null ? productOld.getImageUrl() : productNew.getImageUrl());
+        productOld.setColor(productNew.getColor() == null ? productOld.getColor() : productNew.getColor());
+        productOld.setSize(productNew.getSize() == null ? productOld.getSize() : productNew.getSize());
+        productOld.setMaterial(productNew.getMaterial() == null ? productOld.getMaterial() : productNew.getMaterial());
+        productOld.setWeight(productNew.getWeight() == null ? productOld.getWeight() : productNew.getWeight());
         productOld.setDescription(productNew.getDescription() == null ? productOld.getDescription() : productNew.getDescription());
         productOld.setQuantity(productNew.getQuantity() == null ? productOld.getQuantity() : productNew.getQuantity());
         productOld.setPrice(productNew.getPrice() == null ? productOld.getPrice() : productNew.getPrice());

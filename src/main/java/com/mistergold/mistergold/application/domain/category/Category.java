@@ -1,4 +1,4 @@
-package com.mistergold.mistergold.application.domain.product;
+package com.mistergold.mistergold.application.domain.category;
 
 import com.mistergold.mistergold.application.domain.InfoActivation;
 import lombok.AllArgsConstructor;
@@ -10,16 +10,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public class Category {
     private String id;
     private String name;
     private String imageUrl;
-    private Double size;
-    private String color;
-    private Double weight;
-    private String material;
     private String description;
-    private Double price;
-    private Integer quantity;
     private InfoActivation infoActivation;
 }

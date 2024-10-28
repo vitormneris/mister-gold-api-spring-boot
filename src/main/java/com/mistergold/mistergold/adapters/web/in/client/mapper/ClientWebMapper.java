@@ -11,7 +11,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ClientWebMapper {
-    List<ClientDTO> mapToDTO(List<Client> client);
+    List<ClientDTO> mapToDTO(List<Client> clients);
     ClientDTO mapToDTO(Client client);
     Client mapToDomain(ClientDTO clientDTO);
     InfoActivationDTO mapToDTO(InfoActivation infoActivation);
