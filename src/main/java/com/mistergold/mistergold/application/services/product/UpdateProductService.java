@@ -13,6 +13,8 @@ public class UpdateProductService implements UpdateProductUseCase {
 
     @Override
     public Product update(Product productNew, String id) {
+        productNew.setId(id);
+
         return updateProductPort.update(productNew, id);
     }
 }

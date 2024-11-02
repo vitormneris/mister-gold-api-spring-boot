@@ -12,7 +12,9 @@ public class UpdateAdministratorService implements UpdateAdministratorUseCase {
     private final UpdateAdministratorPort updateAdministratorPort;
 
     @Override
-    public Administrator update(Administrator administratortNew, String id) {
-        return updateAdministratorPort.update(administratortNew, id);
+    public Administrator update(Administrator administratorNew, String id) {
+        administratorNew.setId(id);
+
+        return updateAdministratorPort.update(administratorNew, id);
     }
 }

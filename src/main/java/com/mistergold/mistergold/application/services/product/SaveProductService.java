@@ -16,6 +16,8 @@ public class SaveProductService implements SaveProductUseCase {
 
     @Override
     public Product save(Product product) {
+        product.setId(null);
+
         InfoActivation infoActivation = InfoActivation.builder()
             .creationDate(Instant.now())
             .isActive(true)

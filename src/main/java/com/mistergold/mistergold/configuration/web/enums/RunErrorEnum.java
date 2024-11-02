@@ -12,7 +12,8 @@ public enum RunErrorEnum {
     ERR0004("REDUNDANT_DEACTIVATION",  "Este recurso já está desativado."),
     ERR0005("PRODUCT_NOT_FOUND",  "O produto não foi encontrado."),
     ERR0006("CATEGORY_NOT_FOUND",  "A categoria não foi encontrada."),
-    ERR0007("ADMINISTRATOR_NOT_FOUND",  "O administrador não foi encontrado.");
+    ERR0007("ADMINISTRATOR_NOT_FOUND",  "O administrador não foi encontrado."),
+    ERR0008("PRODUCT_WITHOUT_CATEGORY",  "Não é possível deletar esta categoria porque há produtos que a têm como única categoria associada.");
 
     private final String code;
     private final String message;

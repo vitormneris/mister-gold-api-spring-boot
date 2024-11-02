@@ -13,6 +13,8 @@ public class UpdateCategoryService implements UpdateCategoryUseCase {
 
     @Override
     public Category update(Category categoryNew, String id) {
+        categoryNew.setId(id);
+
         return updateCategoryPort.update(categoryNew, id);
     }
 }

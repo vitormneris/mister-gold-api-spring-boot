@@ -19,6 +19,9 @@ public class SaveCategoryService implements SaveCategoryUseCase {
 
     @Override
     public Category save(Category category) {
+        category.setId(null);
+
+
         InfoActivation infoActivation = InfoActivation.builder()
             .creationDate(Instant.now())
             .isActive(true)

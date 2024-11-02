@@ -14,6 +14,8 @@ public class UpdateClientService implements UpdateClientUseCase {
 
     @Override
     public Client update(Client clientNew, String id) {
+        clientNew.setId(id);
+
         return updateClientPort.update(clientNew, id);
     }
 }

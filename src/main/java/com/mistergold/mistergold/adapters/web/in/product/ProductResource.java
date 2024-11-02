@@ -38,7 +38,7 @@ public class ProductResource {
     })
     @GetMapping("/listartodos")
     public ResponseEntity<List<ProductDTO>> findAll() {
-        return ResponseEntity.ok().body(mapper.mapToDTO(searchProductUseCase.findAll()));
+        return ResponseEntity.ok().body(mapper.mapToListDTO(searchProductUseCase.findAll()));
     }
 
     @Operation(summary = "Busca por um produto na base de dados pelo Id.", method = "GET")

@@ -1,16 +1,17 @@
 package com.mistergold.mistergold.adapters.persistence.entities.product;
 
 import com.mistergold.mistergold.application.domain.InfoActivation;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "produtos")
@@ -34,6 +35,8 @@ public class ProductEntity {
     private Double price;
     @Field(name = "quantidade")
     private Integer quantity;
+    @Field(name = "categorias")
+    private Set<String> categoriesId = new HashSet<>();
     @Field(name = "status_de_ativacao")
     private InfoActivation infoActivation;
 }

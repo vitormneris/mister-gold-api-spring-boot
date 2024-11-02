@@ -24,6 +24,9 @@ public class SaveAdministratorService implements SaveAdministratorUseCase {
 
     @Override
     public Administrator save(Administrator administrator) {
+        administrator.setId(null);
+
+
         if (searchAdministratorPort.checkEmailExists(administrator.getEmail())) throw new DataIntegratyViolationException(RunErrorEnum.ERR0002);
 
         InfoActivation infoActivation = InfoActivation.builder()

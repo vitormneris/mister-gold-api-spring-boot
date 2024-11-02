@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SaveCategoryPersistenceService implements SaveCategoryPort {
     private final CategoryRepository categoryRepository;
-    private final CategoryPersistenceMapper mapper;
+    private final CategoryPersistenceMapper categoryMapper;
 
     @Override
     public Category save(Category category) {
-        return mapper.mapToDomain(categoryRepository.save(mapper.mapToEntity(category)));
+        return categoryMapper.mapToDomain(categoryRepository.save(categoryMapper.mapToEntity(category)));
     }
 }

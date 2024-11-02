@@ -1,13 +1,15 @@
 package com.mistergold.mistergold.application.domain.product;
 
 import com.mistergold.mistergold.application.domain.InfoActivation;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.mistergold.mistergold.application.domain.category.Category;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
@@ -21,5 +23,6 @@ public class Product {
     private String description;
     private Double price;
     private Integer quantity;
+    private List<Category> categories = new ArrayList<>();
     private InfoActivation infoActivation;
 }

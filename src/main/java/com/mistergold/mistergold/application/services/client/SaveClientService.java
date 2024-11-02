@@ -22,6 +22,9 @@ public class SaveClientService implements SaveClientUseCase {
 
     @Override
     public Client save(Client client) {
+        client.setId(null);
+
+
         if (searchClientPort.checkEmailExists(client.getEmail())) throw new DataIntegratyViolationException(RunErrorEnum.ERR0002);
 
         InfoActivation infoActivation = InfoActivation.builder()

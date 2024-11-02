@@ -38,7 +38,7 @@ public class CategoryResource {
     })
     @GetMapping("/listartodos")
     public ResponseEntity<List<CategoryDTO>> findAll() {
-        return ResponseEntity.ok().body(mapper.mapToDTO(searchCategoryUseCase.findAll()));
+        return ResponseEntity.ok().body(mapper.mapToListDTO(searchCategoryUseCase.findAll()));
     }
 
     @Operation(summary = "Busca por uma categoria na base de dados pelo Id.", method = "GET")

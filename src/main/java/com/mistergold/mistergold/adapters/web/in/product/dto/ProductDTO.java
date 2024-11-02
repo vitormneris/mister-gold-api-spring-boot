@@ -1,8 +1,13 @@
 package com.mistergold.mistergold.adapters.web.in.product.dto;
 
 import com.mistergold.mistergold.adapters.web.in.InfoActivationDTO;
+import com.mistergold.mistergold.adapters.web.in.category.dto.CategoryDTO;
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 
+import java.util.List;
+
+@Builder
 public record ProductDTO(
         String id,
         @NotBlank(message = "O campo 'Nome' deve ser preenchido.")
@@ -27,6 +32,8 @@ public record ProductDTO(
         @NotNull(message = "O campo 'Quantidade' não deve ser nulo.")
         @PositiveOrZero(message = "O campo 'Quantidade' não deve receber valores negativos.")
         Integer quantity,
+        @Size(min = 1, message = "O campo 'Categorias' deve ter ao menos uma categoria associada.")
+        List<CategoryDTO> categories,
         InfoActivationDTO infoActivation
 ) {
 }
