@@ -8,4 +8,4 @@ spring:
             authentication-database: admin
             username: root
             password: root
-            database: root
+            database: mistergold_database

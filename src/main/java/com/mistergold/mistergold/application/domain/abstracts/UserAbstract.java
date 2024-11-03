@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserAbstract {
-    private String id;
-    private String name;
-    private String email;
-    private String password;
-    private InfoActivation infoActivation;
+    protected String id;
+    protected String name;
+    protected String email;
+    protected String password;
+    protected InfoActivation infoActivation;
 }

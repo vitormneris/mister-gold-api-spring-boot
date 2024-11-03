@@ -27,7 +27,7 @@ public interface ProductPersistenceMapper {
                 .quantity(product.getQuantity())
                 .price(product.getPrice())
                 .categoriesId(product.getCategories().stream().map(Category::getId).collect(Collectors.toSet()))
-                .infoActivation(product.getInfoActivation())
+                .infoActivation(mapToEntity(product.getInfoActivation()))
                 .build();
     }
 
@@ -44,9 +44,10 @@ public interface ProductPersistenceMapper {
                 .quantity(productEntity.getQuantity())
                 .price(productEntity.getPrice())
                 .categories(productEntity.getCategoriesId().stream().map((categoryId) -> Category.builder().id(categoryId).build()).toList())
-                .infoActivation(productEntity.getInfoActivation())
+                .infoActivation(mapToDomain(productEntity.getInfoActivation()))
                 .build();
     }
 
+    InfoActivationEntity mapToEntity(InfoActivation infoActivation);
     InfoActivation mapToDomain(InfoActivationEntity infoActivationEntity);
 }

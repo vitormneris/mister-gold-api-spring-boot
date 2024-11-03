@@ -56,7 +56,7 @@ public class UpdateProductPersistenceService implements UpdateProductPort {
         categoryRepository.saveAll(categories);
 
         productNew.setId(productRepository.save(productOld).getId());
-        productNew.setInfoActivation(productOld.getInfoActivation());
+        productNew.setInfoActivation(categoryMapper.mapToDomain(productOld.getInfoActivation()));
         return productNew;
     }
 }

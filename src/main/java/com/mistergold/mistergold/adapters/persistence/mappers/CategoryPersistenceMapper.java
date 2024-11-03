@@ -23,7 +23,7 @@ public interface CategoryPersistenceMapper {
             .description(category.getDescription())
             .imageUrl(category.getImageUrl())
             .productsId(category.getProducts() == null ? new HashSet<>() : category.getProducts().stream().map(Product::getId).collect(Collectors.toSet()))
-            .infoActivation(category.getInfoActivation())
+            .infoActivation(mapToEntity(category.getInfoActivation()))
             .build();
     }
 
@@ -34,9 +34,10 @@ public interface CategoryPersistenceMapper {
                 .description(categoryEntity.getDescription())
                 .imageUrl(categoryEntity.getImageUrl())
                 .products(categoryEntity.getProductsId() == null ? new ArrayList<>() : categoryEntity.getProductsId().stream().map((productId) -> Product.builder().id(productId).build()).toList())
-                .infoActivation(categoryEntity.getInfoActivation())
+                .infoActivation(mapToDomain(categoryEntity.getInfoActivation()))
                 .build();
     }
 
+    InfoActivationEntity mapToEntity(InfoActivation infoActivation);
     InfoActivation mapToDomain(InfoActivationEntity infoActivationEntity);
 }

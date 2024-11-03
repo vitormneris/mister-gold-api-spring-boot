@@ -12,12 +12,12 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @NoArgsConstructor
 public class UserEntityAbstract {
     @Id
-    private String id;
+    protected String id;
     @Field(name = "nome")
-    private String name;
-    private String email;
+    protected String name;
+    protected String email;
     @Field(name = "senha")
-    private String password;
-    @Field(name = "status_de_ativacao")
-    private InfoActivationEntity infoActivation;
+    protected String password;
+    @Field(name = "status_ativacao")
+    protected InfoActivationEntity infoActivation;
 }

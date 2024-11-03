@@ -1,5 +1,6 @@
 package com.mistergold.mistergold.adapters.persistence.entities.product;
 
+import com.mistergold.mistergold.adapters.persistence.entities.InfoActivationEntity;
 import com.mistergold.mistergold.application.domain.InfoActivation;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -35,8 +36,8 @@ public class ProductEntity {
     private Double price;
     @Field(name = "quantidade")
     private Integer quantity;
-    @Field(name = "categorias")
+    @Field(name = "categorias_id")
     private Set<String> categoriesId = new HashSet<>();
-    @Field(name = "status_de_ativacao")
-    private InfoActivation infoActivation;
+    @Field(name = "status_ativacao")
+    private InfoActivationEntity infoActivation;
 }

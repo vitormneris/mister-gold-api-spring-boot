@@ -11,15 +11,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SearchProductService implements SearchProductUseCase {
-    private final SearchProductPort SearchProductPort;
+    private final SearchProductPort searchProductPort;
 
     @Override
     public Product findById(String id) {
-        return SearchProductPort.findById(id);
+        return searchProductPort.findById(id);
     }
 
     @Override
     public List<Product> findAll() {
-        return SearchProductPort.findAll();
+        return searchProductPort.findAll();
     }
 }

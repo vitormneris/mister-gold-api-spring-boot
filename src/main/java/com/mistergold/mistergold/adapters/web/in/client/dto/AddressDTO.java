@@ -1,7 +1,10 @@
 package com.mistergold.mistergold.adapters.web.in.client.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
+@Builder
 public record AddressDTO(
         @NotBlank(message = "O campo 'Estado' deve ser preenchido.") 
         String state,
@@ -13,7 +16,7 @@ public record AddressDTO(
         String street,
         @NotBlank(message = "O campo 'CEP' deve ser preenchido.") 
         String postalCode,
-        @NotBlank(message = "O campo 'Número' deve ser preenchido.") 
+        @NotNull(message = "O campo 'Numero' não deve ser nulo.")
         Integer number
 ) {
 }

@@ -75,7 +75,7 @@ public class ClientResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de salvar cliente!"),
     })
     @PostMapping("/salvar")
-    public ResponseEntity<ClientDTO> save(@Valid @RequestBody ClientDTO clientDTO) throws Exception {
+    public ResponseEntity<ClientDTO> save(@Valid @RequestBody ClientDTO clientDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(saveClientUseCase.save(mapper.mapToDomain(clientDTO))));
     }
 

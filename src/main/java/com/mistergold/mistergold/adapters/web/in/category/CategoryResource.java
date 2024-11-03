@@ -61,7 +61,7 @@ public class CategoryResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de salvar categoria!"),
     })
     @PostMapping("/salvar")
-    public ResponseEntity<CategoryDTO> save(@Valid @RequestBody CategoryDTO categoryDTO) throws Exception {
+    public ResponseEntity<CategoryDTO> save(@Valid @RequestBody CategoryDTO categoryDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(saveCategoryUseCase.save(mapper.mapToDomain(categoryDTO))));
     }
 

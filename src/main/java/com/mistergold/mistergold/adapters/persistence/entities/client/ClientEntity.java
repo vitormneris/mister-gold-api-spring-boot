@@ -1,16 +1,15 @@
 package com.mistergold.mistergold.adapters.persistence.entities.client;
 
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.mistergold.mistergold.adapters.persistence.entities.abstracts.UserEntityAbstract;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "clientes")
 public class ClientEntity extends UserEntityAbstract {

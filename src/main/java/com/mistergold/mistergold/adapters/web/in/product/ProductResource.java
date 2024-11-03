@@ -61,7 +61,7 @@ public class ProductResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de salvar produto!"),
     })
     @PostMapping("/salvar")
-    public ResponseEntity<ProductDTO> save(@Valid @RequestBody ProductDTO productDTO) throws Exception {
+    public ResponseEntity<ProductDTO> save(@Valid @RequestBody ProductDTO productDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(saveProductUseCase.save(mapper.mapToDomain(productDTO))));
     }
 

@@ -1,5 +1,6 @@
 package com.mistergold.mistergold.adapters.persistence.entities.category;
 
+import com.mistergold.mistergold.adapters.persistence.entities.InfoActivationEntity;
 import com.mistergold.mistergold.application.domain.InfoActivation;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -24,8 +25,8 @@ public class CategoryEntity {
     private String imageUrl;
     @Field(name = "description")
     private String description;
-    @Field(name = "produtos")
+    @Field(name = "produtos_id")
     private Set<String> productsId = new HashSet<>();
-    @Field(name = "status_de_ativacao")
-    private InfoActivation infoActivation;
+    @Field(name = "status_ativacao")
+    private InfoActivationEntity infoActivation;
 }

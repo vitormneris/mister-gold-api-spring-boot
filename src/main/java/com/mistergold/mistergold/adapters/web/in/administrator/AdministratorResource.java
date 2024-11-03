@@ -73,7 +73,7 @@ public class AdministratorResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de salvar administrador!"),
     })
     @PostMapping("/salvar")
-    public ResponseEntity<AdministratorDTO> save(@Valid @RequestBody AdministratorDTO administratorDTO) throws Exception {
+    public ResponseEntity<AdministratorDTO> save(@Valid @RequestBody AdministratorDTO administratorDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(saveAdministratorUseCase.save(mapper.mapToDomain(administratorDTO))));
     }
 

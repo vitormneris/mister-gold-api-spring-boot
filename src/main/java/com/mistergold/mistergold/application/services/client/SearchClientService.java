@@ -13,20 +13,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SearchClientService implements SearchClientUseCase {
-    private final SearchClientPort SearchClientPort;
+    private final SearchClientPort searchClientPort;
 
     @Override
     public Client findById(String id) {
-        return SearchClientPort.findById(id);
+        return searchClientPort.findById(id);
     }
 
     @Override
     public Client findByEmail(String email) {
-        return SearchClientPort.findByEmail(email);
+        return searchClientPort.findByEmail(email);
     }
 
     @Override
     public List<Client> findAll() {
-        return SearchClientPort.findAll();
+        return searchClientPort.findAll();
     }
 }
