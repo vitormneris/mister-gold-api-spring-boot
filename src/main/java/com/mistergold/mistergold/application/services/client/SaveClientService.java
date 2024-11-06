@@ -8,10 +8,12 @@ import com.mistergold.mistergold.application.ports.out.client.SearchClientPort;
 import com.mistergold.mistergold.configuration.web.advice.exception.DataIntegratyViolationException;
 import com.mistergold.mistergold.configuration.web.enums.RunErrorEnum;
 
+import com.mistergold.mistergold.configuration.web.enums.UserRoleEnum;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,6 +35,8 @@ public class SaveClientService implements SaveClientUseCase {
 
         client.setInfoActivation(infoActivation);
 
+        client.setPassword(new BCryptPasswordEncoder().encode(client.getPassword()));
+        client.setRole(UserRoleEnum.CLIENT);
         return saveClientPort.save(client);
     }
 }

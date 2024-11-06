@@ -3,8 +3,6 @@ package com.mistergold.mistergold.adapters.persistence.mappers;
 import com.mistergold.mistergold.adapters.persistence.entities.InfoActivationEntity;
 import com.mistergold.mistergold.adapters.persistence.entities.client.AddressEntity;
 import com.mistergold.mistergold.adapters.persistence.entities.client.ClientEntity;
-import com.mistergold.mistergold.adapters.web.in.client.dto.AddressDTO;
-import com.mistergold.mistergold.adapters.web.in.client.dto.ClientDTO;
 import com.mistergold.mistergold.application.domain.InfoActivation;
 import com.mistergold.mistergold.application.domain.client.Address;
 import com.mistergold.mistergold.application.domain.client.Client;
@@ -25,6 +23,7 @@ public interface ClientPersistenceMapper {
         clientEntity.setEmail(client.getEmail());
         clientEntity.setPassword(client.getPassword());
         clientEntity.setPhone(client.getPhone());
+        clientEntity.setRole(client.getRole());
         clientEntity.setAddress(mapToEntity(client.getAddress()));
         clientEntity.setInfoActivation(mapToEntity(client.getInfoActivation()));
 
@@ -39,6 +38,7 @@ public interface ClientPersistenceMapper {
         client.setEmail(clientEntity.getEmail());
         client.setPassword(clientEntity.getPassword());
         client.setPhone(clientEntity.getPhone());
+        client.setRole(clientEntity.getRole());
         client.setAddress(mapToDomain(clientEntity.getAddress()));
         client.setInfoActivation(mapToDomain(clientEntity.getInfoActivation()));
 

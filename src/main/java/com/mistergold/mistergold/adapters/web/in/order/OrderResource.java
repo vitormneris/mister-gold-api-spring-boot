@@ -73,7 +73,7 @@ public class OrderResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de atualizar pedido!"),
     })
     @PutMapping("/{id}/atualizar")
-    public ResponseEntity<OrderDTO> update(@Valid @RequestBody OrderDTO orderDTO, @PathVariable(name = "id") String id) {
+    public ResponseEntity<OrderDTO> update(@RequestBody OrderDTO orderDTO, @PathVariable(name = "id") String id) {
         return ResponseEntity.ok().body(mapper.mapToDTO(updateOrderUseCase.update(mapper.mapToDomain(orderDTO), id)));
     }
 

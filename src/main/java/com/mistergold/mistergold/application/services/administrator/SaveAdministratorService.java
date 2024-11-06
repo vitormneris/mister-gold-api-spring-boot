@@ -11,7 +11,9 @@ import com.mistergold.mistergold.application.ports.out.client.SaveClientPort;
 import com.mistergold.mistergold.application.ports.out.client.SearchClientPort;
 import com.mistergold.mistergold.configuration.web.advice.exception.DataIntegratyViolationException;
 import com.mistergold.mistergold.configuration.web.enums.RunErrorEnum;
+import com.mistergold.mistergold.configuration.web.enums.UserRoleEnum;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -26,7 +28,6 @@ public class SaveAdministratorService implements SaveAdministratorUseCase {
     public Administrator save(Administrator administrator) {
         administrator.setId(null);
 
-
         if (searchAdministratorPort.checkEmailExists(administrator.getEmail())) throw new DataIntegratyViolationException(RunErrorEnum.ERR0002);
 
         InfoActivation infoActivation = InfoActivation.builder()
@@ -36,6 +37,8 @@ public class SaveAdministratorService implements SaveAdministratorUseCase {
 
         administrator.setInfoActivation(infoActivation);
 
+        administrator.setPassword(new BCryptPasswordEncoder().encode(administrator.getPassword()));
+        administrator.setRole(UserRoleEnum.ADMINISTRATOR);
         return saveAdministratorPort.save(administrator);
     }
 }

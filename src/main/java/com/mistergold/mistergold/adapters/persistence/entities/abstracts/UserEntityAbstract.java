@@ -1,6 +1,7 @@
 package com.mistergold.mistergold.adapters.persistence.entities.abstracts;
 
 import com.mistergold.mistergold.adapters.persistence.entities.InfoActivationEntity;
+import com.mistergold.mistergold.configuration.web.enums.UserRoleEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserEntityAbstract {
+public abstract class UserEntityAbstract {
     @Id
     protected String id;
     @Field(name = "nome")
@@ -18,6 +19,8 @@ public class UserEntityAbstract {
     protected String email;
     @Field(name = "senha")
     protected String password;
+    @Field(name = "papel")
+    protected UserRoleEnum role;
     @Field(name = "status_ativacao")
     protected InfoActivationEntity infoActivation;
 }

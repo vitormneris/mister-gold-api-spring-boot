@@ -1,7 +1,6 @@
 package com.mistergold.mistergold.adapters.persistence.entities.product;
 
 import com.mistergold.mistergold.adapters.persistence.entities.InfoActivationEntity;
-import com.mistergold.mistergold.application.domain.InfoActivation;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
