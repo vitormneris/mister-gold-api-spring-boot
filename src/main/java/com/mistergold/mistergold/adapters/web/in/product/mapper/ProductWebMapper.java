@@ -1,9 +1,11 @@
 package com.mistergold.mistergold.adapters.web.in.product.mapper;
 
+import com.mistergold.mistergold.adapters.web.PageResponseDTO;
 import com.mistergold.mistergold.adapters.web.in.InfoActivationDTO;
 import com.mistergold.mistergold.adapters.web.in.category.dto.CategoryDTO;
 import com.mistergold.mistergold.adapters.web.in.product.dto.ProductDTO;
 import com.mistergold.mistergold.application.domain.InfoActivation;
+import com.mistergold.mistergold.application.domain.PageResponse;
 import com.mistergold.mistergold.application.domain.category.Category;
 import com.mistergold.mistergold.application.domain.product.Product;
 import org.mapstruct.Mapper;
@@ -56,6 +58,7 @@ public interface ProductWebMapper {
                 .build();
     }
 
+    PageResponseDTO<ProductDTO> mapToPageResponseDto(PageResponse<Product> materialPageResponse);
     InfoActivationDTO mapToDTO(InfoActivation infoActivation);
     InfoActivation mapToDomain(InfoActivationDTO infoActivation);
 }

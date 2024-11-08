@@ -5,10 +5,11 @@ import com.mistergold.mistergold.adapters.persistence.mappers.AdministratorPersi
 import com.mistergold.mistergold.adapters.persistence.mappers.ClientPersistenceMapper;
 import com.mistergold.mistergold.adapters.persistence.repositories.AdministratorRepository;
 import com.mistergold.mistergold.adapters.persistence.repositories.ClientRepository;
-import com.mistergold.mistergold.application.domain.abstracts.UserAbstract;
 import com.mistergold.mistergold.application.domain.administrator.Administrator;
 import com.mistergold.mistergold.application.domain.client.Client;
+import com.mistergold.mistergold.configuration.web.advice.exception.ResourceNotFoundException;
 import com.mistergold.mistergold.configuration.web.auth.service.TokenService;
+import com.mistergold.mistergold.configuration.web.enums.RunErrorEnum;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,7 +46,8 @@ public class FilterToken extends OncePerRequestFilter {
                 var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
-                Administrator user = administratorPersistenceMapper.mapToDomain(administratorRepository.findByEmail(subject).orElseThrow());
+                Administrator user = administratorPersistenceMapper.mapToDomain(administratorRepository.findByEmail(subject)
+                        .orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0011)));
                 var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

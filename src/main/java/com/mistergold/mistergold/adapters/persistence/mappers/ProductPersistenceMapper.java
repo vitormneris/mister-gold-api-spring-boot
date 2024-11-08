@@ -3,9 +3,11 @@ package com.mistergold.mistergold.adapters.persistence.mappers;
 import com.mistergold.mistergold.adapters.persistence.entities.InfoActivationEntity;
 import com.mistergold.mistergold.adapters.persistence.entities.product.ProductEntity;
 import com.mistergold.mistergold.application.domain.InfoActivation;
+import com.mistergold.mistergold.application.domain.PageResponse;
 import com.mistergold.mistergold.application.domain.category.Category;
 import com.mistergold.mistergold.application.domain.product.Product;
 import org.mapstruct.Mapper;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +47,23 @@ public interface ProductPersistenceMapper {
                 .price(productEntity.getPrice())
                 .categories(productEntity.getCategoriesId().stream().map((categoryId) -> Category.builder().id(categoryId).build()).toList())
                 .infoActivation(mapToDomain(productEntity.getInfoActivation()))
+                .build();
+    }
+
+    default PageResponse<Product> mapToPageResponseDomain(Page<ProductEntity> productEntities) {
+        int previousPage = productEntities.hasPrevious() ? productEntities.getNumber() - 1 : productEntities.getNumber();
+        int nextPage = productEntities.hasNext() ? productEntities.getNumber() + 1 : productEntities.getNumber();
+
+        List<Product> products = productEntities.getContent().stream().map(this::mapToDomain).collect(Collectors.toList());
+
+        return PageResponse.<Product>builder()
+                .pageSize(productEntities.getNumberOfElements())
+                .totalElements(productEntities.getTotalElements())
+                .currentPage(productEntities.getNumber())
+                .previousPage(previousPage)
+                .nextPage(nextPage)
+                .content(products)
+                .totalPages(productEntities.getTotalPages())
                 .build();
     }
 

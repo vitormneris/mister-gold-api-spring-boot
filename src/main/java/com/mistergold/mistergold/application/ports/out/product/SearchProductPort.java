@@ -1,10 +1,9 @@
 package com.mistergold.mistergold.application.ports.out.product;
 
+import com.mistergold.mistergold.application.domain.PageResponse;
 import com.mistergold.mistergold.application.domain.product.Product;
 
-import java.util.List;
-
 public interface SearchProductPort {
-    List<Product> findAll();
+    PageResponse<Product> findByPagination(Boolean isActive, Integer page, Integer pageSize, String name);
     Product findById(String id);
 }

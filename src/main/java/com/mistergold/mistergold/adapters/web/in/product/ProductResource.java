@@ -1,5 +1,6 @@
 package com.mistergold.mistergold.adapters.web.in.product;
 
+import com.mistergold.mistergold.adapters.web.PageResponseDTO;
 import com.mistergold.mistergold.adapters.web.in.product.dto.ProductDTO;
 import com.mistergold.mistergold.adapters.web.in.product.mapper.ProductWebMapper;
 import com.mistergold.mistergold.application.ports.in.product.DeleteProductUseCase;
@@ -11,6 +12,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,16 +32,26 @@ public class ProductResource {
     private final SaveProductUseCase saveProductUseCase;
     private final ProductWebMapper mapper;
 
-    @Operation(summary = "Busca por um produto na base de dados pelo Id.", method = "GET")
+    @Operation(summary = "Lista todos os produto por nome e por status de ativação de forma paginada.", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Produto encontrado com sucesso!"),
+            @ApiResponse(responseCode = "200", description = "Produto listados com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos!"),
             @ApiResponse(responseCode = "422", description = "Dados da requisição inválidos!"),
-            @ApiResponse(responseCode = "500", description = "Falha no serviço de buscar produto!"),
+            @ApiResponse(responseCode = "500", description = "Falha no serviço listar produto!"),
     })
-    @GetMapping("/listartodos")
-    public ResponseEntity<List<ProductDTO>> findAll() {
-        return ResponseEntity.ok().body(mapper.mapToListDTO(searchProductUseCase.findAll()));
+    @GetMapping
+    public ResponseEntity<PageResponseDTO<ProductDTO>> findByPagination(
+            @RequestParam(value = "isActive", defaultValue = "true", required = false)
+            Boolean isActive,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false)
+            @Min(value = 10, message = "O valor de pageSize deve ser no minimo 10")
+            @Max(value = 30, message = "O valor de pageSize deve ser no maximo 30")
+            Integer pageSize,
+            @RequestParam(value = "page", defaultValue = "0", required = false)
+            Integer page,
+            @RequestParam(value = "name", required = false)
+            String name) {
+        return ResponseEntity.ok().body(mapper.mapToPageResponseDto(searchProductUseCase.findByPagination(isActive, page, pageSize, name)));
     }
 
     @Operation(summary = "Busca por um produto na base de dados pelo Id.", method = "GET")

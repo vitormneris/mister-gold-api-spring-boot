@@ -27,6 +27,7 @@ public class AuthorizationService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<ClientEntity> objClient = clientRepository.findByEmail(username);
         if (objClient.isPresent()) return clientPersistenceMapper.mapToDomain(objClient.get());
-        return administratorPersistenceMapper.mapToDomain(administratorRepository.findByEmail(username).orElseThrow());
+        return administratorPersistenceMapper.mapToDomain(administratorRepository.findByEmail(username)
+                .orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0011)));
     }
 }

@@ -22,6 +22,7 @@ public interface ClientWebMapper {
                 .name(client.getName())
                 .email(client.getEmail())
                 .phone(client.getPhone())
+                .role(client.getRole())
                 .password(client.getPassword())
                 .address(mapToDTO(client.getAddress()))
                 .infoActivation(mapToDTO(client.getInfoActivation()))
