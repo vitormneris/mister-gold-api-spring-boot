@@ -2,29 +2,29 @@ package com.mistergold.mistergold.adapters.persistence.services.administrator;
 
 import com.mistergold.mistergold.adapters.persistence.mappers.AdministratorPersistenceMapper;
 import com.mistergold.mistergold.adapters.persistence.repositories.AdministratorRepository;
+import com.mistergold.mistergold.application.domain.PageResponse;
 import com.mistergold.mistergold.application.domain.administrator.Administrator;
 import com.mistergold.mistergold.application.ports.out.administrator.SearchAdministratorPort;
 import com.mistergold.mistergold.configuration.web.advice.exception.ResourceNotFoundException;
 import com.mistergold.mistergold.configuration.web.enums.RunErrorEnum;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class SearchAdministratorPersistenceService implements SearchAdministratorPort {
     private final AdministratorRepository administratorRepository;
-    private final AdministratorPersistenceMapper mapper;
+    private final AdministratorPersistenceMapper administratorMapper;
 
     @Override
     public Administrator findById(String id) {
-        return mapper.mapToDomain(administratorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0007)));
+        return administratorMapper.mapToDomain(administratorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0007)));
     }
 
     @Override
     public Administrator findByEmail(String email) {
-        return mapper.mapToDomain(administratorRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0007)));
+        return administratorMapper.mapToDomain(administratorRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0007)));
     }
 
     @Override
@@ -33,7 +33,9 @@ public class SearchAdministratorPersistenceService implements SearchAdministrato
     }
 
     @Override
-    public List<Administrator> findAll() {
-        return mapper.mapListToDomain(administratorRepository.findAll());
+    public PageResponse<Administrator> findByPagination(Boolean isActive, Integer page, Integer pageSize, String name) {
+        return administratorMapper.mapToPageResponseDomain(
+                administratorRepository.findByPagination(isActive, PageRequest.of(page, pageSize), (name == null) ? "" : name)
+        );
     }
 }

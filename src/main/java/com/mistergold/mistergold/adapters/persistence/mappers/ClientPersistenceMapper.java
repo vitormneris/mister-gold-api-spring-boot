@@ -4,12 +4,15 @@ import com.mistergold.mistergold.adapters.persistence.entities.InfoActivationEnt
 import com.mistergold.mistergold.adapters.persistence.entities.client.AddressEntity;
 import com.mistergold.mistergold.adapters.persistence.entities.client.ClientEntity;
 import com.mistergold.mistergold.application.domain.InfoActivation;
+import com.mistergold.mistergold.application.domain.PageResponse;
 import com.mistergold.mistergold.application.domain.client.Address;
 import com.mistergold.mistergold.application.domain.client.Client;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.mapstruct.Mapper;
+import org.springframework.data.domain.Page;
 
 @Mapper(componentModel = "spring")
 public interface ClientPersistenceMapper {
@@ -47,6 +50,23 @@ public interface ClientPersistenceMapper {
 
     Address mapToDomain(AddressEntity addressEntity);
     AddressEntity mapToEntity(Address address);
+
+    default PageResponse<Client> mapToPageResponseDomain(Page<ClientEntity> clientEntities) {
+        int previousPage = clientEntities.hasPrevious() ? clientEntities.getNumber() - 1 : clientEntities.getNumber();
+        int nextPage = clientEntities.hasNext() ? clientEntities.getNumber() + 1 : clientEntities.getNumber();
+
+        List<Client> clients = clientEntities.getContent().stream().map(this::mapToDomain).collect(Collectors.toList());
+
+        return PageResponse.<Client>builder()
+                .pageSize(clientEntities.getNumberOfElements())
+                .totalElements(clientEntities.getTotalElements())
+                .currentPage(clientEntities.getNumber())
+                .previousPage(previousPage)
+                .nextPage(nextPage)
+                .content(clients)
+                .totalPages(clientEntities.getTotalPages())
+                .build();
+    }
 
     InfoActivationEntity mapToEntity(InfoActivation infoActivation);
     InfoActivation mapToDomain(InfoActivationEntity infoActivationEntity);

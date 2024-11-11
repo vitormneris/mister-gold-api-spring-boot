@@ -58,7 +58,7 @@ public interface ProductWebMapper {
                 .build();
     }
 
-    PageResponseDTO<ProductDTO> mapToPageResponseDto(PageResponse<Product> materialPageResponse);
+    PageResponseDTO<ProductDTO> mapToPageResponseDto(PageResponse<Product> pageResponse);
     InfoActivationDTO mapToDTO(InfoActivation infoActivation);
     InfoActivation mapToDomain(InfoActivationDTO infoActivation);
 }

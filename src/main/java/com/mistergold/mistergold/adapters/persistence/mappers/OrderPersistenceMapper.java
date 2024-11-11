@@ -4,12 +4,14 @@ import com.mistergold.mistergold.adapters.persistence.entities.InfoActivationEnt
 import com.mistergold.mistergold.adapters.persistence.entities.order.OrderEntity;
 import com.mistergold.mistergold.adapters.persistence.entities.order.OrderItemEntity;
 import com.mistergold.mistergold.application.domain.InfoActivation;
+import com.mistergold.mistergold.application.domain.PageResponse;
 import com.mistergold.mistergold.application.domain.client.Client;
 import com.mistergold.mistergold.application.domain.order.Order;
 import com.mistergold.mistergold.application.domain.order.OrderItem;
 import com.mistergold.mistergold.application.domain.product.Product;
 import com.mistergold.mistergold.configuration.web.enums.OrderStatusEnum;
 import org.mapstruct.Mapper;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Set;
@@ -51,6 +53,23 @@ public interface OrderPersistenceMapper {
                 .client(new Client(orderEntity.getClientId()))
                 .moment(orderEntity.getMoment())
                 .infoActivation(mapToDomain(orderEntity.getInfoActivation()))
+                .build();
+    }
+
+    default PageResponse<Order> mapToPageResponseDomain(Page<OrderEntity> orderEntities) {
+        int previousPage = orderEntities.hasPrevious() ? orderEntities.getNumber() - 1 : orderEntities.getNumber();
+        int nextPage = orderEntities.hasNext() ? orderEntities.getNumber() + 1 : orderEntities.getNumber();
+
+        List<Order> orders = orderEntities.getContent().stream().map(this::mapToDomain).collect(Collectors.toList());
+
+        return PageResponse.<Order>builder()
+                .pageSize(orderEntities.getNumberOfElements())
+                .totalElements(orderEntities.getTotalElements())
+                .currentPage(orderEntities.getNumber())
+                .previousPage(previousPage)
+                .nextPage(nextPage)
+                .content(orders)
+                .totalPages(orderEntities.getTotalPages())
                 .build();
     }
 

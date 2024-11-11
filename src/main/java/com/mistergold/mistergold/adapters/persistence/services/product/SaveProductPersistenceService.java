@@ -22,7 +22,6 @@ public class SaveProductPersistenceService implements SaveProductPort {
     private final ProductPersistenceMapper productMapper;
     private final CategoryPersistenceMapper categoryMapper;
 
-
     @Override
     public Product save(Product product) {
         List<CategoryEntity> categories = product.getCategories().stream()

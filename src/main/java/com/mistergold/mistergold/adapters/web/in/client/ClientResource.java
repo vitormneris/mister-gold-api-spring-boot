@@ -1,5 +1,6 @@
 package com.mistergold.mistergold.adapters.web.in.client;
 
+import com.mistergold.mistergold.adapters.web.PageResponseDTO;
 import com.mistergold.mistergold.adapters.web.in.client.dto.ClientDTO;
 import com.mistergold.mistergold.adapters.web.in.client.mapper.ClientWebMapper;
 import com.mistergold.mistergold.application.ports.in.client.DeleteClientUseCase;
@@ -12,9 +13,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,16 +32,26 @@ public class ClientResource {
     private final SaveClientUseCase saveClientUseCase;
     private final ClientWebMapper mapper;
 
-    @Operation(summary = "Busca por um cliente na base de dados pelo Id.", method = "GET")
+    @Operation(summary = "Lista todos as cliente por nome e por status de ativação de forma paginada.", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Cliente encontrado com sucesso!"),
+            @ApiResponse(responseCode = "200", description = "Cliente listados com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos!"),
             @ApiResponse(responseCode = "422", description = "Dados da requisição inválidos!"),
-            @ApiResponse(responseCode = "500", description = "Falha no serviço de buscar cliente!"),
+            @ApiResponse(responseCode = "500", description = "Falha no serviço listar cliente!"),
     })
-    @GetMapping("/listartodos")
-    public ResponseEntity<List<ClientDTO>> findAll() {
-        return ResponseEntity.ok().body(mapper.mapToDTO(searchClientUseCase.findAll()));
+    @GetMapping
+    public ResponseEntity<PageResponseDTO<ClientDTO>> findByPagination(
+            @RequestParam(value = "isActive", defaultValue = "true", required = false)
+            Boolean isActive,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false)
+            @Min(value = 10, message = "O valor de pageSize deve ser no minimo 10")
+            @Max(value = 30, message = "O valor de pageSize deve ser no maximo 30")
+            Integer pageSize,
+            @RequestParam(value = "page", defaultValue = "0", required = false)
+            Integer page,
+            @RequestParam(value = "name", required = false)
+            String name) {
+        return ResponseEntity.ok().body(mapper.mapToPageResponseDto(searchClientUseCase.findByPagination(isActive, page, pageSize, name)));
     }
 
     @Operation(summary = "Busca por um cliente na base de dados pelo Id.", method = "GET")

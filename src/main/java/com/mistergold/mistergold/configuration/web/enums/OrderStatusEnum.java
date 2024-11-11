@@ -11,17 +11,14 @@ public enum OrderStatusEnum {
     PAID(2, "Pago."),
     SHIPPED(3, "Enviado."),
     DELIVERED(4, "Entregue."),
-    CANCELED(5, "Cancelado."),;
+    CANCELED(5, "Cancelado.");
 
     private final Integer code;
     private final String message;
 
     public static OrderStatusEnum valueOf(Integer code) {
-        for (OrderStatusEnum status : OrderStatusEnum.values()) {
-            if (status.getCode().equals(code)) {
-                return status;
-            }
-        }
-        throw new ArgumentInvalidException(RunErrorEnum.ERR0004);
+        for (OrderStatusEnum status : OrderStatusEnum.values())
+            if (status.getCode().equals(code)) return status;
+        throw new ArgumentInvalidException(RunErrorEnum.ERR0010);
     }
 }

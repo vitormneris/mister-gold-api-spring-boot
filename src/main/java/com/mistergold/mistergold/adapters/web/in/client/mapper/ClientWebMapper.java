@@ -1,10 +1,11 @@
 package com.mistergold.mistergold.adapters.web.in.client.mapper;
 
-import com.mistergold.mistergold.adapters.persistence.entities.client.AddressEntity;
+import com.mistergold.mistergold.adapters.web.PageResponseDTO;
 import com.mistergold.mistergold.adapters.web.in.InfoActivationDTO;
 import com.mistergold.mistergold.adapters.web.in.client.dto.AddressDTO;
 import com.mistergold.mistergold.adapters.web.in.client.dto.ClientDTO;
 import com.mistergold.mistergold.application.domain.InfoActivation;
+import com.mistergold.mistergold.application.domain.PageResponse;
 import com.mistergold.mistergold.application.domain.client.Address;
 import com.mistergold.mistergold.application.domain.client.Client;
 
@@ -45,7 +46,7 @@ public interface ClientWebMapper {
 
     Address mapToDomain(AddressDTO addressDTO);
     AddressDTO mapToDTO(Address address);
-
+    PageResponseDTO<ClientDTO> mapToPageResponseDto(PageResponse<Client> pageResponse);
     InfoActivationDTO mapToDTO(InfoActivation infoActivation);
     InfoActivation mapToDomain(InfoActivationDTO infoActivation);
 }

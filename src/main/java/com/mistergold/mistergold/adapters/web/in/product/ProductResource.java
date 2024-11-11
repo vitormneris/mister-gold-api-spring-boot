@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -74,8 +75,8 @@ public class ProductResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de salvar produto!"),
     })
     @PostMapping("/salvar")
-    public ResponseEntity<ProductDTO> save(@Valid @RequestBody ProductDTO productDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(saveProductUseCase.save(mapper.mapToDomain(productDTO))));
+    public ResponseEntity<ProductDTO> save(@Valid @RequestPart(value = "product") ProductDTO productDTO, @RequestPart(value = "file") MultipartFile file) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(saveProductUseCase.save(mapper.mapToDomain(productDTO), file)));
     }
 
     @Operation(summary = "Atualiza um produto na base de dados pelo Id.", method = "PUT")

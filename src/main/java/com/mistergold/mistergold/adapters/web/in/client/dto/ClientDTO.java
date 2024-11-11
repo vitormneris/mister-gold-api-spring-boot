@@ -27,4 +27,5 @@ public record ClientDTO(
         String password,
         InfoActivationDTO infoActivation
 ) {
+
 }
