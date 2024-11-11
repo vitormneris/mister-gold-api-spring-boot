@@ -7,8 +7,10 @@ import com.mistergold.mistergold.application.ports.in.category.SaveCategoryUseCa
 import com.mistergold.mistergold.application.ports.in.product.SaveProductUseCase;
 import com.mistergold.mistergold.application.ports.out.category.SaveCategoryPort;
 import com.mistergold.mistergold.application.ports.out.product.SaveProductPort;
+import com.mistergold.mistergold.application.ports.out.upload_image.UploadImagePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
 
@@ -16,11 +18,13 @@ import java.time.Instant;
 @RequiredArgsConstructor
 public class SaveCategoryService implements SaveCategoryUseCase {
     private final SaveCategoryPort saveCategoryPort;
+    private final UploadImagePort uploadImagePort;
 
     @Override
-    public Category save(Category category) {
+    public Category save(Category category, MultipartFile file) {
         category.setId(null);
 
+        category.setImageUrl(uploadImagePort.uploadImage(file));
 
         InfoActivation infoActivation = InfoActivation.builder()
             .creationDate(Instant.now())

@@ -3,6 +3,7 @@ package com.mistergold.mistergold.adapters.web.in.category;
 import com.mistergold.mistergold.adapters.web.PageResponseDTO;
 import com.mistergold.mistergold.adapters.web.in.category.dto.CategoryDTO;
 import com.mistergold.mistergold.adapters.web.in.category.mapper.CategoryWebMapper;
+import com.mistergold.mistergold.adapters.web.in.product.dto.ProductDTO;
 import com.mistergold.mistergold.application.ports.in.category.DeleteCategoryUseCase;
 import com.mistergold.mistergold.application.ports.in.category.SaveCategoryUseCase;
 import com.mistergold.mistergold.application.ports.in.category.SearchCategoryUseCase;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -72,8 +74,8 @@ public class CategoryResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de salvar categoria!"),
     })
     @PostMapping("/salvar")
-    public ResponseEntity<CategoryDTO> save(@Valid @RequestBody CategoryDTO categoryDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(saveCategoryUseCase.save(mapper.mapToDomain(categoryDTO))));
+    public ResponseEntity<CategoryDTO> save(@Valid @RequestPart(value = "category") CategoryDTO categoryDTO, @RequestPart(value = "file") MultipartFile file) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(saveCategoryUseCase.save(mapper.mapToDomain(categoryDTO), file)));
     }
 
     @Operation(summary = "Atualiza uma categoria na base de dados pelo Id.", method = "PUT")
@@ -84,8 +86,8 @@ public class CategoryResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de atualizar categoria!"),
     })
     @PutMapping("/{id}/atualizar")
-    public ResponseEntity<CategoryDTO> update(@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable(name = "id") String id) {
-        return ResponseEntity.ok().body(mapper.mapToDTO(updateCategoryUseCase.update(mapper.mapToDomain(categoryDTO), id)));
+    public ResponseEntity<CategoryDTO> update(@Valid @RequestPart(value = "category") CategoryDTO categoryDTO, @RequestPart(value = "file") MultipartFile file, @PathVariable(name = "id") String id) {
+        return ResponseEntity.ok().body(mapper.mapToDTO(updateCategoryUseCase.update(mapper.mapToDomain(categoryDTO), file, id)));
     }
 
     @Operation(summary = "Desativa uma categoria na base de dados pelo Id.", method = "DELETE")

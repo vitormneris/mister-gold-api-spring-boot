@@ -7,6 +7,7 @@ import com.mistergold.mistergold.application.ports.in.product.DeleteProductUseCa
 import com.mistergold.mistergold.application.ports.in.product.SaveProductUseCase;
 import com.mistergold.mistergold.application.ports.in.product.SearchProductUseCase;
 import com.mistergold.mistergold.application.ports.in.product.UpdateProductUseCase;
+import com.mistergold.mistergold.application.ports.out.upload_image.UploadImagePort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -32,6 +33,9 @@ public class ProductResource {
     private final DeleteProductUseCase deleteProductUseCase;
     private final SaveProductUseCase saveProductUseCase;
     private final ProductWebMapper mapper;
+
+    private final UploadImagePort uploadImagePort;
+
 
     @Operation(summary = "Lista todos os produto por nome e por status de ativação de forma paginada.", method = "GET")
     @ApiResponses(value = {
@@ -87,8 +91,8 @@ public class ProductResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de atualizar produto!"),
     })
     @PutMapping("/{id}/atualizar")
-    public ResponseEntity<ProductDTO> update(@Valid @RequestBody ProductDTO productDTO, @PathVariable(name = "id") String id) {
-        return ResponseEntity.ok().body(mapper.mapToDTO(updateProductUseCase.update(mapper.mapToDomain(productDTO), id)));
+    public ResponseEntity<ProductDTO> update(@Valid @RequestPart(value = "product") ProductDTO productDTO, @RequestPart(value = "file") MultipartFile file, @PathVariable(name = "id") String id) {
+        return ResponseEntity.ok().body(mapper.mapToDTO(updateProductUseCase.update(mapper.mapToDomain(productDTO), file, id)));
     }
 
     @Operation(summary = "Desativa um produto na base de dados pelo Id.", method = "DELETE")
