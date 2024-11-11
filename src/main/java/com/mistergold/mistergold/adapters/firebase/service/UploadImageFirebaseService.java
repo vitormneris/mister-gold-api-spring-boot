@@ -19,7 +19,7 @@ public class UploadImageFirebaseService implements UploadImagePort {
     String url = "/home/vitor/college/interdiscipline_project/mistergold_frontend/images/upload/";
 
     public String uploadImage(MultipartFile file) {
-        String fileName = UUID.randomUUID() + extesionImage(Objects.requireNonNull(file.getOriginalFilename()));
+        String fileName = UUID.randomUUID() + extensionImage(Objects.requireNonNull(file.getOriginalFilename()));
         try {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(url + fileName);
@@ -30,7 +30,7 @@ public class UploadImageFirebaseService implements UploadImagePort {
         return "/images/upload/" + fileName;
     }
 
-    private String extesionImage(String nameImage) {
+    private String extensionImage(String nameImage) {
         String[] strings = nameImage.split("\\.");
         return "." + strings[strings.length - 1];
     }

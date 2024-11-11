@@ -86,7 +86,7 @@ public class CategoryResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de atualizar categoria!"),
     })
     @PutMapping("/{id}/atualizar")
-    public ResponseEntity<CategoryDTO> update(@Valid @RequestPart(value = "category") CategoryDTO categoryDTO, @RequestPart(value = "file") MultipartFile file, @PathVariable(name = "id") String id) {
+    public ResponseEntity<CategoryDTO> update(@Valid @RequestPart(value = "category") CategoryDTO categoryDTO, @RequestPart(value = "file", required = false) MultipartFile file, @PathVariable(name = "id") String id) {
         return ResponseEntity.ok().body(mapper.mapToDTO(updateCategoryUseCase.update(mapper.mapToDomain(categoryDTO), file, id)));
     }
 

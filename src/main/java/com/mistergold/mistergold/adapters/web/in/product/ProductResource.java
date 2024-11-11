@@ -91,7 +91,7 @@ public class ProductResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de atualizar produto!"),
     })
     @PutMapping("/{id}/atualizar")
-    public ResponseEntity<ProductDTO> update(@Valid @RequestPart(value = "product") ProductDTO productDTO, @RequestPart(value = "file") MultipartFile file, @PathVariable(name = "id") String id) {
+    public ResponseEntity<ProductDTO> update(@Valid @RequestPart(value = "product") ProductDTO productDTO, @RequestPart(value = "file", required = false) MultipartFile file, @PathVariable(name = "id") String id) {
         return ResponseEntity.ok().body(mapper.mapToDTO(updateProductUseCase.update(mapper.mapToDomain(productDTO), file, id)));
     }
 
