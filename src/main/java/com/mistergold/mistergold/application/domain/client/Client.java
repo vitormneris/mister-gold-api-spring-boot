@@ -2,6 +2,7 @@ package com.mistergold.mistergold.application.domain.client;
 
 import com.mistergold.mistergold.application.domain.abstracts.UserAbstract;
 
+import com.mistergold.mistergold.application.domain.order.Order;
 import lombok.*;
 
 @Getter
@@ -12,6 +13,7 @@ import lombok.*;
 public class Client extends UserAbstract {
     private String phone;
     private Address address;
+    private Order order;
 
     public Client(String id) {
         this.id = id;

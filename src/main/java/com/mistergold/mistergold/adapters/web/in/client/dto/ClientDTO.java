@@ -2,6 +2,7 @@ package com.mistergold.mistergold.adapters.web.in.client.dto;
 
 import com.mistergold.mistergold.adapters.web.in.InfoActivationDTO;
 
+import com.mistergold.mistergold.adapters.web.in.order.dto.OrderDTO;
 import com.mistergold.mistergold.configuration.web.enums.UserRoleEnum;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -23,6 +24,7 @@ public record ClientDTO(
         @Valid
         @NotNull(message = "O campo 'Endereço' não deve ser nulo.")
         AddressDTO address,
+        OrderDTO order,
         @NotBlank(message = "O campo 'Senha' deve ser preenchido.")
         String password,
         InfoActivationDTO infoActivation

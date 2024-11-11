@@ -3,7 +3,6 @@ package com.mistergold.mistergold.adapters.web.in.category;
 import com.mistergold.mistergold.adapters.web.PageResponseDTO;
 import com.mistergold.mistergold.adapters.web.in.category.dto.CategoryDTO;
 import com.mistergold.mistergold.adapters.web.in.category.mapper.CategoryWebMapper;
-import com.mistergold.mistergold.adapters.web.in.product.dto.ProductDTO;
 import com.mistergold.mistergold.application.ports.in.category.DeleteCategoryUseCase;
 import com.mistergold.mistergold.application.ports.in.category.SaveCategoryUseCase;
 import com.mistergold.mistergold.application.ports.in.category.SearchCategoryUseCase;

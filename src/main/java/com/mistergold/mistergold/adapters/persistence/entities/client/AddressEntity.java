@@ -21,4 +21,6 @@ public class AddressEntity {
     private String postalCode;
     @Field(name = "numero_residencia")
     private Integer number;
+    @Field(name = "complement")
+    private String complement;
 }

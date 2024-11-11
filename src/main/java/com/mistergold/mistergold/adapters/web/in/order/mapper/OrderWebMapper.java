@@ -4,13 +4,11 @@ import com.mistergold.mistergold.adapters.web.PageResponseDTO;
 import com.mistergold.mistergold.adapters.web.in.InfoActivationDTO;
 import com.mistergold.mistergold.adapters.web.in.category.dto.CategoryDTO;
 import com.mistergold.mistergold.adapters.web.in.client.dto.AddressDTO;
-import com.mistergold.mistergold.adapters.web.in.client.dto.ClientDTO;
 import com.mistergold.mistergold.adapters.web.in.order.dto.OrderDTO;
 import com.mistergold.mistergold.adapters.web.in.order.dto.OrderItemDTO;
 import com.mistergold.mistergold.adapters.web.in.product.dto.ProductDTO;
 import com.mistergold.mistergold.application.domain.InfoActivation;
 import com.mistergold.mistergold.application.domain.PageResponse;
-import com.mistergold.mistergold.application.domain.category.Category;
 import com.mistergold.mistergold.application.domain.client.Client;
 import com.mistergold.mistergold.application.domain.order.Order;
 import com.mistergold.mistergold.application.domain.order.OrderItem;
@@ -69,23 +67,12 @@ public interface OrderWebMapper {
                 .number(order.getClient().getAddress().getNumber())
                 .build();
 
-        ClientDTO cLientDTO = ClientDTO.builder()
-                .id(order.getClient().getId())
-                .name(order.getClient().getName())
-                .email(order.getClient().getEmail())
-                .password(order.getClient().getPassword())
-                .address(addressDTO)
-                .phone(order.getClient().getPhone())
-                .infoActivation(mapToDTO(order.getClient().getInfoActivation()))
-                .build();
-
         return OrderDTO.builder()
                 .id(order.getId())
                 .items(orderItemDTOS)
                 .orderStatus(order.getOrderStatus())
                 .moment(order.getMoment())
                 .totalPrice(order.totalPrice())
-                .client(cLientDTO)
                 .infoActivation(mapToDTO(order.getInfoActivation()))
                 .build();
     }

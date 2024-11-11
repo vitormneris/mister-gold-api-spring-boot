@@ -17,4 +17,6 @@ public class ClientEntity extends UserEntityAbstract {
     private String phone;
     @Field(name = "endereco")
     private AddressEntity address;
+    @Field(name = "pedido")
+    private String orderId;
 }

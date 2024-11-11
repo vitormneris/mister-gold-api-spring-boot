@@ -11,6 +11,7 @@ import com.mistergold.mistergold.application.domain.client.Client;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.mistergold.mistergold.application.domain.order.Order;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 
@@ -27,6 +28,7 @@ public interface ClientPersistenceMapper {
         clientEntity.setPassword(client.getPassword());
         clientEntity.setPhone(client.getPhone());
         clientEntity.setRole(client.getRole());
+        clientEntity.setOrderId(client.getOrder().getId());
         clientEntity.setAddress(mapToEntity(client.getAddress()));
         clientEntity.setInfoActivation(mapToEntity(client.getInfoActivation()));
 
@@ -42,6 +44,7 @@ public interface ClientPersistenceMapper {
         client.setPassword(clientEntity.getPassword());
         client.setPhone(clientEntity.getPhone());
         client.setRole(clientEntity.getRole());
+        client.setOrder(Order.builder().id(clientEntity.getOrderId()).build());
         client.setAddress(mapToDomain(clientEntity.getAddress()));
         client.setInfoActivation(mapToDomain(clientEntity.getInfoActivation()));
 
