@@ -18,6 +18,7 @@ public record OrderDTO(
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "-03:00")
         Instant moment,
         OrderStatusEnum orderStatus,
+        String orderMessage,
         @NotNull(message = "O campo 'Cliente' não deve ser nulo.")
         ClientDTO client,
         Double totalPrice,

@@ -73,7 +73,7 @@ public interface OrderWebMapper {
                 .id(order.getId())
                 .items(orderItemDTOS)
                 .client(clientDTO)
-                .orderStatus(order.getOrderStatus())
+                .orderMessage(order.getOrderStatus().getMessage())
                 .moment(order.getMoment())
                 .totalPrice(order.totalPrice())
                 .infoActivation(mapToDTO(order.getInfoActivation()))
