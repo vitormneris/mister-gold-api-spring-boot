@@ -3,7 +3,7 @@ package com.mistergold.mistergold.application.domain;
 
 import lombok.*;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,5 +17,5 @@ public class PageResponse<T> {
     Integer currentPage;
     Integer nextPage;
     Integer previousPage;
-    List<T> content;
+    Set<T> content;
 }

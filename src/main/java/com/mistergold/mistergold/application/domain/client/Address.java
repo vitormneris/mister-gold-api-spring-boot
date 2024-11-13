@@ -12,4 +12,5 @@ public class Address {
     private String street;
     private String postalCode;
     private Integer number;
+    private String complement;
 }

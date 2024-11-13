@@ -21,8 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/produtos")
@@ -49,7 +47,7 @@ public class ProductResource {
             @RequestParam(value = "isActive", defaultValue = "true", required = false)
             Boolean isActive,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false)
-            @Min(value = 10, message = "O valor de pageSize deve ser no minimo 10")
+            @Min(value = 1, message = "O valor de pageSize deve ser no minimo 10")
             @Max(value = 30, message = "O valor de pageSize deve ser no maximo 30")
             Integer pageSize,
             @RequestParam(value = "page", defaultValue = "0", required = false)
@@ -91,12 +89,9 @@ public class ProductResource {
             @ApiResponse(responseCode = "500", description = "Falha no serviço de atualizar produto!"),
     })
     @PutMapping("/{id}/atualizar")
-    public ResponseEntity<ProductDTO> update(@Valid @RequestPart(value = "product") ProductDTO productDTO, @RequestPart(value = "file"
-
-
-
-
-    ) MultipartFile file, @PathVariable(name = "id") String id) {
+    public ResponseEntity<ProductDTO> update(@Valid @RequestPart(value = "product") ProductDTO productDTO,
+                                             @RequestPart(value = "file", required = false) MultipartFile file,
+                                             @PathVariable(name = "id") String id) {
         return ResponseEntity.ok().body(mapper.mapToDTO(updateProductUseCase.update(mapper.mapToDomain(productDTO), file, id)));
     }
 

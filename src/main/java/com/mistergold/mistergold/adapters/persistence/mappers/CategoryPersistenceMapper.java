@@ -9,14 +9,13 @@ import com.mistergold.mistergold.application.domain.product.Product;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface CategoryPersistenceMapper {
-    List<Category> mapListToDomain(List<CategoryEntity> entities);
+    Set<Category> mapListToDomain(Set<CategoryEntity> entities);
 
     default CategoryEntity mapToEntity(Category category) {
         return CategoryEntity.builder()
@@ -35,7 +34,8 @@ public interface CategoryPersistenceMapper {
                 .name(categoryEntity.getName())
                 .description(categoryEntity.getDescription())
                 .imageUrl(categoryEntity.getImageUrl())
-                .products(categoryEntity.getProductsId() == null ? new ArrayList<>() : categoryEntity.getProductsId().stream().map((productId) -> Product.builder().id(productId).build()).toList())
+                .products(categoryEntity.getProductsId() == null ? new HashSet<>() : categoryEntity.getProductsId().stream()
+                        .map((productId) -> Product.builder().id(productId).build()).collect(Collectors.toSet()))
                 .infoActivation(mapToDomain(categoryEntity.getInfoActivation()))
                 .build();
     }
@@ -44,7 +44,7 @@ public interface CategoryPersistenceMapper {
         int previousPage = categoryEntities.hasPrevious() ? categoryEntities.getNumber() - 1 : categoryEntities.getNumber();
         int nextPage = categoryEntities.hasNext() ? categoryEntities.getNumber() + 1 : categoryEntities.getNumber();
 
-        List<Category> categories = categoryEntities.getContent().stream().map(this::mapToDomain).collect(Collectors.toList());
+        Set<Category> categories = categoryEntities.getContent().stream().map(this::mapToDomain).collect(Collectors.toSet());
 
         return PageResponse.<Category>builder()
                 .pageSize(categoryEntities.getNumberOfElements())

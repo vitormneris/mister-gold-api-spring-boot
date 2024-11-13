@@ -43,7 +43,7 @@ public class CategoryResource {
             @RequestParam(value = "isActive", defaultValue = "true", required = false)
             Boolean isActive,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false)
-            @Min(value = 10, message = "O valor de pageSize deve ser no minimo 10")
+            @Min(value = 1, message = "O valor de pageSize deve ser no minimo 10")
             @Max(value = 30, message = "O valor de pageSize deve ser no maximo 30")
             Integer pageSize,
             @RequestParam(value = "page", defaultValue = "0", required = false)

@@ -7,13 +7,13 @@ import jakarta.validation.constraints.NotBlank;
 
 public record AdministratorDTO(
     String id,
-    @NotBlank(message = "O campo 'Nome' deve ser preenchido.")
+    @NotBlank(message = "nome")
     String name,
-    @Email(message = "O e-mail fornecido deve ser válido.")
-    @NotBlank(message = "O campo 'E-mail' deve ser preenchido.")
+    @Email(message = "e-mail")
+    @NotBlank(message = "e-mail")
     String email,
     UserRoleEnum role,
-    @NotBlank(message = "O campo 'Senha' deve ser preenchido.")
+    @NotBlank(message = "senha")
     String password,
     InfoActivationDTO infoActivation
 ) {

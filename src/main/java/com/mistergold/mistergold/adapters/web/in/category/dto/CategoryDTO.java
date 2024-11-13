@@ -5,7 +5,7 @@ import com.mistergold.mistergold.adapters.web.in.product.dto.ProductDTO;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 
-import java.util.List;
+import java.util.Set;
 
 @Builder
 public record CategoryDTO(
@@ -15,7 +15,7 @@ public record CategoryDTO(
         String imageUrl,
         @NotBlank(message = "O campo 'Descrição' deve ser preenchido.")
         String description,
-        List<ProductDTO> products,
+        Set<ProductDTO> products,
         InfoActivationDTO infoActivation
 ) {
 

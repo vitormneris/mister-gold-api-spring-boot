@@ -5,12 +5,16 @@ import com.mistergold.mistergold.adapters.persistence.entities.client.ClientEnti
 import com.mistergold.mistergold.adapters.persistence.mappers.ClientPersistenceMapper;
 import com.mistergold.mistergold.adapters.persistence.repositories.ClientRepository;
 import com.mistergold.mistergold.application.domain.client.Client;
+import com.mistergold.mistergold.application.domain.order.Order;
 import com.mistergold.mistergold.application.ports.out.client.UpdateClientPort;
 import com.mistergold.mistergold.configuration.web.advice.exception.ResourceNotFoundException;
 import com.mistergold.mistergold.configuration.web.enums.RunErrorEnum;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +29,11 @@ public class UpdateClientPersistenceService implements UpdateClientPort {
         clientOld.setEmail(clientNew.getEmail() == null ? clientOld.getEmail() : clientNew.getEmail());
         clientOld.setPhone(clientNew.getPhone() == null ? clientOld.getPhone() : clientNew.getPhone());
 
+        if (clientNew.getOrder() != null) {
+            if (clientOld.getOrdersId() == null) clientOld.setOrdersId(new HashSet<>());
+            clientOld.getOrdersId().addAll(clientNew.getOrder().stream().map(Order::getId).collect(Collectors.toSet()));
+        }
+
         clientOld.setAddress(clientNew.getAddress() == null ? clientOld.getAddress() :
             AddressEntity.builder()
                     .state(clientNew.getAddress().getState() == null ? clientOld.getAddress().getState() : clientNew.getAddress().getState())
@@ -33,6 +42,7 @@ public class UpdateClientPersistenceService implements UpdateClientPort {
                     .street(clientNew.getAddress().getStreet() == null ? clientOld.getAddress().getStreet() : clientNew.getAddress().getStreet())
                     .postalCode(clientNew.getAddress().getPostalCode() == null ? clientOld.getAddress().getPostalCode() : clientNew.getAddress().getPostalCode())
                     .number(clientNew.getAddress().getNumber() == null ? clientOld.getAddress().getNumber() : clientNew.getAddress().getNumber())
+                    .complement(clientNew.getAddress().getComplement() == null ? clientOld.getAddress().getComplement() : clientNew.getAddress().getComplement())
                     .build());
 
         return mapper.mapToDomain(clientRepository.save(clientOld));

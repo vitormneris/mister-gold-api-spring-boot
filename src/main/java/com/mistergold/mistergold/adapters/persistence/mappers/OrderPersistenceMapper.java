@@ -60,7 +60,7 @@ public interface OrderPersistenceMapper {
         int previousPage = orderEntities.hasPrevious() ? orderEntities.getNumber() - 1 : orderEntities.getNumber();
         int nextPage = orderEntities.hasNext() ? orderEntities.getNumber() + 1 : orderEntities.getNumber();
 
-        List<Order> orders = orderEntities.getContent().stream().map(this::mapToDomain).collect(Collectors.toList());
+        Set<Order> orders = orderEntities.getContent().stream().map(this::mapToDomain).collect(Collectors.toSet());
 
         return PageResponse.<Order>builder()
                 .pageSize(orderEntities.getNumberOfElements())

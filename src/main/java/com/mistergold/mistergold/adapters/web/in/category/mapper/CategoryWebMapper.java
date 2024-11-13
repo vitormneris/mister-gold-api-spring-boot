@@ -9,14 +9,15 @@ import com.mistergold.mistergold.application.domain.PageResponse;
 import com.mistergold.mistergold.application.domain.category.Category;
 import org.mapstruct.Mapper;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface CategoryWebMapper {
-    List<CategoryDTO> mapToListDTO(List<Category> categories);
+    Set<CategoryDTO> mapToListDTO(Set<Category> categories);
 
     default CategoryDTO mapToDTO(Category category) {
-        List<ProductDTO> productDTOS = category.getProducts().stream().map(product -> ProductDTO.builder()
+        Set<ProductDTO> productDTOS = category.getProducts().stream().map(product -> ProductDTO.builder()
                 .id(product.getId())
                 .name(product.getName())
                 .description(product.getDescription())
@@ -28,7 +29,7 @@ public interface CategoryWebMapper {
                 .quantity(product.getQuantity())
                 .material(product.getMaterial())
                 .infoActivation(mapToDTO(product.getInfoActivation()))
-                .build()).toList();
+                .build()).collect(Collectors.toSet());
 
         return CategoryDTO.builder()
                 .id(category.getId())

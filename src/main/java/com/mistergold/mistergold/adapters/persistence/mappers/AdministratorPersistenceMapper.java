@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
@@ -21,7 +22,7 @@ public interface AdministratorPersistenceMapper {
         int previousPage = administratorEntities.hasPrevious() ? administratorEntities.getNumber() - 1 : administratorEntities.getNumber();
         int nextPage = administratorEntities.hasNext() ? administratorEntities.getNumber() + 1 : administratorEntities.getNumber();
 
-        List<Administrator> administrators = administratorEntities.getContent().stream().map(this::mapToDomain).collect(Collectors.toList());
+        Set<Administrator> administrators = administratorEntities.getContent().stream().map(this::mapToDomain).collect(Collectors.toSet());
 
         return PageResponse.<Administrator>builder()
                 .pageSize(administratorEntities.getNumberOfElements())

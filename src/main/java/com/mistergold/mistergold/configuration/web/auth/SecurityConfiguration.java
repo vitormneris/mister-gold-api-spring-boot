@@ -53,11 +53,12 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE, "/administradores/{id}/deletar").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.DELETE, "/administradores/{id}/desativar").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.PUT, "/administradores/{id}/atualizar").hasRole("ADMINISTRATOR")
-                        .requestMatchers(HttpMethod.POST, "/administradores/salvar").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.POST, "/administradores/salvar").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.GET, "/administradores/{id}/id").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.GET, "/administradores").hasRole("ADMINISTRATOR")
 
                         .requestMatchers(HttpMethod.POST, "/pedidos/salvar").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/pedidos").hasRole("CLIENT")
 
 
                         .requestMatchers(HttpMethod.POST, "/autorizacao/login").permitAll()

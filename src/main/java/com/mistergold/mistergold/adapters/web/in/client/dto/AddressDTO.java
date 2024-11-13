@@ -6,17 +6,19 @@ import lombok.Builder;
 
 @Builder
 public record AddressDTO(
-        @NotBlank(message = "O campo 'Estado' deve ser preenchido.") 
+        @NotBlank(message = "estado")
         String state,
-        @NotBlank(message = "O campo 'Cidade' deve ser preenchido.") 
+        @NotBlank(message = "cidade")
         String city,
-        @NotBlank(message = "O campo 'Bairro' deve ser preenchido.") 
+        @NotBlank(message = "bairro")
         String neighborhood,
-        @NotBlank(message = "O campo 'Rua' deve ser preenchido.") 
+        @NotBlank(message = "rua")
         String street,
-        @NotBlank(message = "O campo 'CEP' deve ser preenchido.") 
+        @NotBlank(message = "CEP")
         String postalCode,
-        @NotNull(message = "O campo 'Numero' não deve ser nulo.")
-        Integer number
+        @NotNull(message = "número")
+        Integer number,
+        @NotBlank(message = "complemento")
+        String complement
 ) {
 }

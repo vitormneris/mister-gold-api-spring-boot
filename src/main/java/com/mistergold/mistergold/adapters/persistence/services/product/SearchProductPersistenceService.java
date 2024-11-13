@@ -14,7 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +28,8 @@ public class SearchProductPersistenceService implements SearchProductPort {
     @Override
     public Product findById(String id) {
         Product product = productMapper.mapToDomain(productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0005)));
-        List<CategoryEntity> categories = product.getCategories().stream()
-                .map(category -> categoryRepository.findById(category.getId()).get()).toList();
+        Set<CategoryEntity> categories = product.getCategories().stream()
+                .map(category -> categoryRepository.findById(category.getId()).get()).collect(Collectors.toSet());
 
         product.setCategories(categoryMapper.mapListToDomain(categories));
         return product;
@@ -40,7 +41,7 @@ public class SearchProductPersistenceService implements SearchProductPort {
                 productRepository.findByPagination(isActive, PageRequest.of(page, pageSize), (name == null) ? "" : name));
 
         pageResponse.getContent().forEach(product -> product.setCategories(product.getCategories().stream()
-                .map(category -> categoryMapper.mapToDomain(categoryRepository.findById(category.getId()).get())).toList()));
+                .map(category -> categoryMapper.mapToDomain(categoryRepository.findById(category.getId()).get())).collect(Collectors.toSet())));
 
         return pageResponse;
     }

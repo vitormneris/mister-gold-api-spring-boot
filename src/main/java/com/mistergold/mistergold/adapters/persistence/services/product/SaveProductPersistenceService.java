@@ -12,7 +12,8 @@ import com.mistergold.mistergold.configuration.web.enums.RunErrorEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +25,9 @@ public class SaveProductPersistenceService implements SaveProductPort {
 
     @Override
     public Product save(Product product) {
-        List<CategoryEntity> categories = product.getCategories().stream()
+        Set<CategoryEntity> categories = product.getCategories().stream()
                 .map(category -> categoryRepository.findById(category.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0006))).toList();
+                .orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0006))).collect(Collectors.toSet());
 
         product.setCategories(categoryMapper.mapListToDomain(categories));
         product.setId(productRepository.save(productMapper.mapToEntity(product)).getId());

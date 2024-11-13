@@ -18,11 +18,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.mistergold.mistergold.application.domain.order.Order;
+import com.mistergold.mistergold.application.domain.order.OrderItem;
+import com.mistergold.mistergold.application.domain.product.Product;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ClientWebMapper {
-    List<ClientDTO> mapToDTO(List<Client> clients);
+    List<ClientDTO> mapTListDTO(List<Client> clients);
 
     default ClientDTO mapToDTO(Client client) {
         return ClientDTO.builder()
@@ -32,7 +34,7 @@ public interface ClientWebMapper {
                 .phone(client.getPhone())
                 .role(client.getRole())
                 .password(client.getPassword())
-                .order(mapToDTO(client.getOrder()))
+                .order(client.getOrder() == null ? null : mapToListDTO(client.getOrder()))
                 .address(mapToDTO(client.getAddress()))
                 .infoActivation(mapToDTO(client.getInfoActivation()))
                 .build();
@@ -52,49 +54,62 @@ public interface ClientWebMapper {
         return client;
     }
 
+    Set<OrderDTO> mapToListDTO(Set<Order> order);
     default OrderDTO mapToDTO(Order order) {
-        Set<OrderItemDTO> orderItemDTOS = order.getItems().stream().map(orderItem -> {
+        if (order.getItems() != null) {
+            Set<OrderItemDTO> orderItemDTOS = order.getItems().stream().map(orderItem -> {
 
-            List<CategoryDTO> categoryDTOS = orderItem.getProduct().getCategories().stream().map(category -> {
-                return CategoryDTO.builder()
+                Set<CategoryDTO> categoryDTOS = orderItem.getProduct().getCategories().stream().map(category -> CategoryDTO.builder()
                         .id(orderItem.getProduct().getId())
                         .name(orderItem.getProduct().getName())
                         .description(orderItem.getProduct().getDescription())
                         .imageUrl(orderItem.getProduct().getImageUrl())
                         .infoActivation(mapToDTO(orderItem.getProduct().getInfoActivation()))
+                        .build()).collect(Collectors.toSet());
+
+                ProductDTO productDTO = ProductDTO.builder()
+                        .id(orderItem.getProduct().getId())
+                        .name(orderItem.getProduct().getName())
+                        .description(orderItem.getProduct().getDescription())
+                        .imageUrl(orderItem.getProduct().getImageUrl())
+                        .price(orderItem.getProduct().getPrice())
+                        .size(orderItem.getProduct().getSize())
+                        .color(orderItem.getProduct().getColor())
+                        .weight(orderItem.getProduct().getWeight())
+                        .quantity(orderItem.getProduct().getQuantity())
+                        .material(orderItem.getProduct().getMaterial())
+                        .categories(categoryDTOS)
+                        .infoActivation(mapToDTO(orderItem.getProduct().getInfoActivation()))
                         .build();
-            }).toList();
 
-            ProductDTO productDTO = ProductDTO.builder()
-                    .id(orderItem.getProduct().getId())
-                    .name(orderItem.getProduct().getName())
-                    .description(orderItem.getProduct().getDescription())
-                    .imageUrl(orderItem.getProduct().getImageUrl())
-                    .price(orderItem.getProduct().getPrice())
-                    .size(orderItem.getProduct().getSize())
-                    .color(orderItem.getProduct().getColor())
-                    .weight(orderItem.getProduct().getWeight())
-                    .quantity(orderItem.getProduct().getQuantity())
-                    .material(orderItem.getProduct().getMaterial())
-                    .categories(categoryDTOS)
-                    .infoActivation(mapToDTO(orderItem.getProduct().getInfoActivation()))
+                return OrderItemDTO.builder()
+                        .product(productDTO)
+                        .price(orderItem.getPrice())
+                        .quantity(orderItem.getQuantity())
+                        .build();
+            }).collect(Collectors.toSet());
+
+            ClientDTO clientDTO = ClientDTO.builder()
+                    .id(order.getClient().getId())
+                    .name(order.getClient().getName())
+                    .email(order.getClient().getEmail())
+                    .phone(order.getClient().getPhone())
+                    .infoActivation(mapToDTO(order.getClient().getInfoActivation()))
+                    .role(order.getClient().getRole())
+                    .address(mapToDTO(order.getClient().getAddress()))
                     .build();
 
-            return OrderItemDTO.builder()
-                    .product(productDTO)
-                    .price(orderItem.getPrice())
-                    .quantity(orderItem.getQuantity())
+            return OrderDTO.builder()
+                    .id(order.getId())
+                    .items(orderItemDTOS)
+                    .client(clientDTO)
+                    .orderStatus(order.getOrderStatus())
+                    .moment(order.getMoment())
+                    .totalPrice(order.totalPrice())
+                    .infoActivation(mapToDTO(order.getInfoActivation()))
                     .build();
-        }).collect(Collectors.toSet());
-
-        return OrderDTO.builder()
-                .id(order.getId())
-                .items(orderItemDTOS)
-                .orderStatus(order.getOrderStatus())
-                .moment(order.getMoment())
-                .totalPrice(order.totalPrice())
-                .infoActivation(mapToDTO(order.getInfoActivation()))
-                .build();
+        }
+        return null;
     }
 
     Address mapToDomain(AddressDTO addressDTO);

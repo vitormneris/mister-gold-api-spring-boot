@@ -9,6 +9,7 @@ import com.mistergold.mistergold.application.domain.client.Address;
 import com.mistergold.mistergold.application.domain.client.Client;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.mistergold.mistergold.application.domain.order.Order;
@@ -28,7 +29,7 @@ public interface ClientPersistenceMapper {
         clientEntity.setPassword(client.getPassword());
         clientEntity.setPhone(client.getPhone());
         clientEntity.setRole(client.getRole());
-        clientEntity.setOrderId(client.getOrder().getId());
+        clientEntity.setOrdersId(client.getOrder() == null ? null : client.getOrder().stream().map(Order::getId).collect(Collectors.toSet()));
         clientEntity.setAddress(mapToEntity(client.getAddress()));
         clientEntity.setInfoActivation(mapToEntity(client.getInfoActivation()));
 
@@ -44,7 +45,7 @@ public interface ClientPersistenceMapper {
         client.setPassword(clientEntity.getPassword());
         client.setPhone(clientEntity.getPhone());
         client.setRole(clientEntity.getRole());
-        client.setOrder(Order.builder().id(clientEntity.getOrderId()).build());
+        client.setOrder(clientEntity.getOrdersId() == null ? null : clientEntity.getOrdersId().stream().map(orderId -> Order.builder().id(orderId).build()).collect(Collectors.toSet()));
         client.setAddress(mapToDomain(clientEntity.getAddress()));
         client.setInfoActivation(mapToDomain(clientEntity.getInfoActivation()));
 
@@ -58,7 +59,7 @@ public interface ClientPersistenceMapper {
         int previousPage = clientEntities.hasPrevious() ? clientEntities.getNumber() - 1 : clientEntities.getNumber();
         int nextPage = clientEntities.hasNext() ? clientEntities.getNumber() + 1 : clientEntities.getNumber();
 
-        List<Client> clients = clientEntities.getContent().stream().map(this::mapToDomain).collect(Collectors.toList());
+        Set<Client> clients = clientEntities.getContent().stream().map(this::mapToDomain).collect(Collectors.toSet());
 
         return PageResponse.<Client>builder()
                 .pageSize(clientEntities.getNumberOfElements())

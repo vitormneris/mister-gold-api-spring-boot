@@ -6,6 +6,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.mistergold.mistergold.adapters.persistence.entities.abstracts.UserEntityAbstract;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Builder
@@ -18,5 +21,5 @@ public class ClientEntity extends UserEntityAbstract {
     @Field(name = "endereco")
     private AddressEntity address;
     @Field(name = "pedido")
-    private String orderId;
+    private Set<String> ordersId = new HashSet<>();
 }

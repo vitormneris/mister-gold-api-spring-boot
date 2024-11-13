@@ -10,22 +10,24 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
+import java.util.Set;
+
 @Builder
 public record ClientDTO(
         String id,
-        @NotBlank(message = "O campo 'Nome' deve ser preenchido.")
+        @NotBlank(message = "nome")
         String name,
-        @Email(message = "O e-mail fornecido deve ser válido.")
-        @NotBlank(message = "O campo 'E-mail' deve ser preenchido.")
+        @Email(message = "e-mail")
+        @NotBlank(message = "e-mail")
         String email,
-        @NotBlank(message = "O campo 'Telefone' deve ser preenchido.")
+        @NotBlank(message = "telefone")
         String phone,
         UserRoleEnum role,
         @Valid
-        @NotNull(message = "O campo 'Endereço' não deve ser nulo.")
+        @NotNull(message = "endereço")
         AddressDTO address,
-        OrderDTO order,
-        @NotBlank(message = "O campo 'Senha' deve ser preenchido.")
+        Set<OrderDTO> order,
+        @NotBlank(message = "senha")
         String password,
         InfoActivationDTO infoActivation
 ) {

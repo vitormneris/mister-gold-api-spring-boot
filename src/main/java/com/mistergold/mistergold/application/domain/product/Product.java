@@ -4,8 +4,8 @@ import com.mistergold.mistergold.application.domain.InfoActivation;
 import com.mistergold.mistergold.application.domain.category.Category;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,6 +23,6 @@ public class Product {
     private String description;
     private Double price;
     private Integer quantity;
-    private List<Category> categories = new ArrayList<>();
+    private Set<Category> categories = new HashSet<>();
     private InfoActivation infoActivation;
 }

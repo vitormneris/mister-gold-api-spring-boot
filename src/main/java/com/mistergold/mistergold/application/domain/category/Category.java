@@ -4,9 +4,7 @@ import com.mistergold.mistergold.application.domain.InfoActivation;
 import com.mistergold.mistergold.application.domain.product.Product;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Setter
@@ -18,7 +16,7 @@ public class Category {
     private String name;
     private String imageUrl;
     private String description;
-    private List<Product> products = new ArrayList<>();
+    private Set<Product> products = new HashSet<>();
     private InfoActivation infoActivation;
 
     public Category(String name) {

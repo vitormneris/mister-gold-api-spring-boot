@@ -10,11 +10,12 @@ import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface ProductPersistenceMapper {
-    List<Product> mapListToDomain(List<ProductEntity> entities);
+    Set<Product> mapListToDomain(Set<ProductEntity> entities);
 
     default ProductEntity mapToEntity(Product product) {
         return ProductEntity.builder()
@@ -45,7 +46,7 @@ public interface ProductPersistenceMapper {
                 .weight(productEntity.getWeight())
                 .quantity(productEntity.getQuantity())
                 .price(productEntity.getPrice())
-                .categories(productEntity.getCategoriesId().stream().map((categoryId) -> Category.builder().id(categoryId).build()).toList())
+                .categories(productEntity.getCategoriesId().stream().map((categoryId) -> Category.builder().id(categoryId).build()).collect(Collectors.toSet()))
                 .infoActivation(mapToDomain(productEntity.getInfoActivation()))
                 .build();
     }
@@ -54,7 +55,7 @@ public interface ProductPersistenceMapper {
         int previousPage = productEntities.hasPrevious() ? productEntities.getNumber() - 1 : productEntities.getNumber();
         int nextPage = productEntities.hasNext() ? productEntities.getNumber() + 1 : productEntities.getNumber();
 
-        List<Product> products = productEntities.getContent().stream().map(this::mapToDomain).collect(Collectors.toList());
+        Set<Product> products = productEntities.getContent().stream().map(this::mapToDomain).collect(Collectors.toSet());
 
         return PageResponse.<Product>builder()
                 .pageSize(productEntities.getNumberOfElements())

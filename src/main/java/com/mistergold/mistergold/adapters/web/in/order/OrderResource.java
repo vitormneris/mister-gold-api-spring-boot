@@ -1,10 +1,8 @@
 package com.mistergold.mistergold.adapters.web.in.order;
 
 import com.mistergold.mistergold.adapters.web.PageResponseDTO;
-import com.mistergold.mistergold.adapters.web.in.client.dto.ClientDTO;
 import com.mistergold.mistergold.adapters.web.in.order.dto.OrderDTO;
 import com.mistergold.mistergold.adapters.web.in.order.mapper.OrderWebMapper;
-import com.mistergold.mistergold.application.ports.in.order.DeleteOrderUseCase;
 import com.mistergold.mistergold.application.ports.in.order.SaveOrderUseCase;
 import com.mistergold.mistergold.application.ports.in.order.SearchOrderUseCase;
 import com.mistergold.mistergold.application.ports.in.order.UpdateOrderUseCase;
@@ -20,8 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/pedidos")
@@ -29,7 +25,6 @@ import java.util.List;
 public class OrderResource {
     private final SearchOrderUseCase searchOrderUseCase;
     private final UpdateOrderUseCase updateOrderUseCase;
-    private final DeleteOrderUseCase deleteOrderUseCase;
     private final SaveOrderUseCase saveOrderUseCase;
     private final OrderWebMapper mapper;
 
@@ -89,30 +84,5 @@ public class OrderResource {
     @PutMapping("/{id}/atualizar")
     public ResponseEntity<OrderDTO> update(@RequestBody OrderDTO orderDTO, @PathVariable(name = "id") String id) {
         return ResponseEntity.ok().body(mapper.mapToDTO(updateOrderUseCase.update(mapper.mapToDomain(orderDTO), id)));
-    }
-
-    @Operation(summary = "Desativa um pedido na base de dados pelo Id.", method = "DELETE")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pedido desativado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos!"),
-            @ApiResponse(responseCode = "422", description = "Dados da requisição inválidos!"),
-            @ApiResponse(responseCode = "500", description = "Falha no serviço de desativar pedido!"),
-    })
-    @DeleteMapping("/{id}/desativar")
-    public ResponseEntity<OrderDTO> inactivate(@PathVariable(name = "id") String id) {
-        return ResponseEntity.ok().body(mapper.mapToDTO(deleteOrderUseCase.inactivate(id)));
-    }
-
-    @Operation(summary = "Deleta um pedido na base de dados pelo Id.", method = "DELETE")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pedido deletado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos!"),
-            @ApiResponse(responseCode = "422", description = "Dados da requisição inválidos!"),
-            @ApiResponse(responseCode = "500", description = "Falha no serviço de deletar pedido!"),
-    })
-    @DeleteMapping("/{id}/deletar")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") String id) {
-        deleteOrderUseCase.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }

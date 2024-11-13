@@ -13,8 +13,8 @@ import com.mistergold.mistergold.configuration.web.enums.RunErrorEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,15 +26,25 @@ public class UpdateProductPersistenceService implements UpdateProductPort {
 
     @Override
     public Product update(Product productNew, String id) {
-        List<CategoryEntity> categories = new ArrayList<>();
+        Set<CategoryEntity> categories = new HashSet<>();
         if (productNew.getCategories() != null)
             categories = productNew.getCategories().stream()
                     .map(category -> categoryRepository.findById(category.getId())
-                            .orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0006))).toList();
+                            .orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0006))).collect(Collectors.toSet());
 
         productNew.setCategories(categoryMapper.mapListToDomain(categories));
 
         ProductEntity productOld = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0005));
+
+
+        categoryRepository.findAllById(productOld.getCategoriesId()).forEach(category -> {
+            category.setProductsId(category.getProductsId().stream().filter(productId -> !productId.equals(productOld.getId())).collect(Collectors.toSet()));
+            categoryRepository.save(category);
+        });
+
+        categories.forEach(category -> category.getProductsId().add(productOld.getId()));
+        categoryRepository.saveAll(categories);
+
 
         productOld.setName(productNew.getName() == null ? productOld.getName() : productNew.getName());
         productOld.setImageUrl(productNew.getImageUrl() == null ? productOld.getImageUrl() : productNew.getImageUrl());
@@ -46,14 +56,6 @@ public class UpdateProductPersistenceService implements UpdateProductPort {
         productOld.setQuantity(productNew.getQuantity() == null ? productOld.getQuantity() : productNew.getQuantity());
         productOld.setCategoriesId(productNew.getCategories() == null ? productOld.getCategoriesId() : productNew.getCategories().stream().map(Category::getId).collect(Collectors.toSet()));
         productOld.setPrice(productNew.getPrice() == null ? productOld.getPrice() : productNew.getPrice());
-
-        categoryRepository.findAllById(productOld.getCategoriesId()).forEach(category -> {
-            category.setProductsId(category.getProductsId().stream().filter(productId -> !productId.equals(productOld.getId())).collect(Collectors.toSet()));
-            categoryRepository.save(category);
-        });
-
-        categories.forEach(category -> category.getProductsId().add(productOld.getId()));
-        categoryRepository.saveAll(categories);
 
         productNew.setId(productRepository.save(productOld).getId());
         productNew.setInfoActivation(categoryMapper.mapToDomain(productOld.getInfoActivation()));

@@ -7,8 +7,6 @@ import com.mistergold.mistergold.application.ports.out.category.SearchCategoryPo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class SearchCategoryService implements SearchCategoryUseCase {

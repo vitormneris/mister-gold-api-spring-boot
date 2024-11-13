@@ -3,6 +3,7 @@ package com.mistergold.mistergold.adapters.web;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,5 +17,5 @@ public class PageResponseDTO<T>{
     int currentPage;
     int nextPage;
     int previousPage;
-    List<T> content;
+    Set<T> content;
 }

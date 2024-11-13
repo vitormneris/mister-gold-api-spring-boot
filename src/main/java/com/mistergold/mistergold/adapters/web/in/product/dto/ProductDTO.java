@@ -6,6 +6,7 @@ import jakarta.validation.constraints.*;
 import lombok.Builder;
 
 import java.util.List;
+import java.util.Set;
 
 @Builder
 public record ProductDTO(
@@ -32,7 +33,7 @@ public record ProductDTO(
         @PositiveOrZero(message = "O campo 'Quantidade' não deve receber valores negativos.")
         Integer quantity,
         @Size(min = 1, message = "O campo 'Categorias' deve ter ao menos uma categoria associada.")
-        List<CategoryDTO> categories,
+        Set<CategoryDTO> categories,
         InfoActivationDTO infoActivation
 ) {
 }
