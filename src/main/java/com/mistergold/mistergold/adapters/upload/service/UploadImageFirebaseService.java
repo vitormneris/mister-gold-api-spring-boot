@@ -1,7 +1,7 @@
 package com.mistergold.mistergold.adapters.upload.service;
 
 import com.mistergold.mistergold.application.ports.out.upload_image.UploadImagePort;
-import com.mistergold.mistergold.configuration.web.advice.exception.InternalError;
+import com.mistergold.mistergold.configuration.web.advice.exception.InternalErrorException;
 import com.mistergold.mistergold.configuration.web.enums.RunErrorEnum;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,16 +16,21 @@ import java.util.UUID;
 @Service
 public class UploadImageFirebaseService implements UploadImagePort {
 
-    String url = "/home/vitor/college/interdiscipline_project/mistergold_frontend/images/upload/";
+    String url1 = "/home/vitor/college/interdiscipline_project/mistergold_frontend/images/upload/";
+    String url2 = "/home/vitor/college/interdiscipline_project/MisterGoldFrontEndAdministrator/images/upload/";
 
     public String uploadImage(MultipartFile file) {
         String fileName = UUID.randomUUID() + extensionImage(Objects.requireNonNull(file.getOriginalFilename()));
         try {
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(url + fileName);
-            Files.write(path, bytes);
+
+            Path path1 = Paths.get(url1 + fileName);
+            Files.write(path1, bytes);
+
+            Path path2 = Paths.get(url2 + fileName);
+            Files.write(path2, bytes);
         } catch (IOException e) {
-            throw new InternalError(RunErrorEnum.ERR0012);
+            throw new InternalErrorException(RunErrorEnum.ERR0012);
         }
         return "/images/upload/" + fileName;
     }

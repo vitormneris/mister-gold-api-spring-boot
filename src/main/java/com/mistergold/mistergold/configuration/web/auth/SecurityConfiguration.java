@@ -60,7 +60,10 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/administradores").hasRole("ADMINISTRATOR")
 
                         .requestMatchers(HttpMethod.POST, "/pedidos/salvar").hasRole("CLIENT")
-                        .requestMatchers(HttpMethod.GET, "/pedidos").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/pedidos").hasRole("ADMINISTRATOR")
+
+                        .requestMatchers(HttpMethod.POST, "/mensagens/salvar").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/mensagens").hasRole("ADMINISTRATOR")
 
                         .requestMatchers(HttpMethod.POST, "/autorizacao/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/autorizacao/token/cliente").hasRole("CLIENT")
