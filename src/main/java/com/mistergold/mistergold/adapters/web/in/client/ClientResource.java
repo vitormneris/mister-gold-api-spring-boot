@@ -2,6 +2,7 @@ package com.mistergold.mistergold.adapters.web.in.client;
 
 import com.mistergold.mistergold.adapters.web.PageResponseDTO;
 import com.mistergold.mistergold.adapters.web.in.client.dto.ClientDTO;
+import com.mistergold.mistergold.adapters.web.in.client.dto.RecoveryDTO;
 import com.mistergold.mistergold.adapters.web.in.client.mapper.ClientWebMapper;
 import com.mistergold.mistergold.application.ports.in.client.DeleteClientUseCase;
 import com.mistergold.mistergold.application.ports.in.client.SaveClientUseCase;
@@ -66,16 +67,30 @@ public class ClientResource {
         return ResponseEntity.ok().body(mapper.mapToDTO(searchClientUseCase.findById(id)));
     }
 
-    @Operation(summary = "Busca por um cliente na base de dados pelo E-mail.", method = "GET")
+    @Operation(summary = "Método de recuperação de senha, gerando código aleatório e enviado pelo e-mail.", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Cliente encontrado com sucesso!"),
+            @ApiResponse(responseCode = "200", description = "Código gerado e enviado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos!"),
             @ApiResponse(responseCode = "422", description = "Dados da requisição inválidos!"),
-            @ApiResponse(responseCode = "500", description = "Falha no serviço de buscar cliente!"),
+            @ApiResponse(responseCode = "500", description = "Falha no serviço de recuperar senha!"),
     })
-    @GetMapping("/{email}/email")
-    public ResponseEntity<ClientDTO> findByEmail(@PathVariable(name = "email") String email) {
-        return ResponseEntity.ok().body(mapper.mapToDTO(searchClientUseCase.findByEmail(email)));
+    @GetMapping("/{email}/recuperacao")
+    public ResponseEntity<Void> recoveryPasswordGenerator(@PathVariable(name = "email") String email) {
+        searchClientUseCase.recoveryPasswordGenerator(email);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Método de recuperação de senha, verificando código e trocando senha.", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Código verificado e senha trocada com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos!"),
+            @ApiResponse(responseCode = "422", description = "Dados da requisição inválidos!"),
+            @ApiResponse(responseCode = "500", description = "Falha no serviço de recuperar senha!"),
+    })
+    @PostMapping("/{email}/recuperacao/codigo")
+    public ResponseEntity<Void> recoveryPasswordSet(@PathVariable(name = "email") String email, @RequestBody RecoveryDTO recoveryDTO) {
+        updateClientUseCase.recoveryPasswordSet(email, mapper.mapToDomain(recoveryDTO));
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Salva um cliente na base de dados.", method = "POST")

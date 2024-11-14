@@ -20,6 +20,7 @@ public abstract class UserAbstract implements UserDetails {
     protected String name;
     protected String email;
     protected String password;
+    protected String code;
     protected UserRoleEnum role;
     protected InfoActivation infoActivation;
 

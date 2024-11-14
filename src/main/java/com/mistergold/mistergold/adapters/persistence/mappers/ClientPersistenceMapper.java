@@ -45,6 +45,7 @@ public interface ClientPersistenceMapper {
         client.setPassword(clientEntity.getPassword());
         client.setPhone(clientEntity.getPhone());
         client.setRole(clientEntity.getRole());
+        client.setCode(clientEntity.getCode());
         client.setOrder(clientEntity.getOrdersId() == null ? null : clientEntity.getOrdersId().stream().map(orderId -> Order.builder().id(orderId).build()).collect(Collectors.toSet()));
         client.setAddress(mapToDomain(clientEntity.getAddress()));
         client.setInfoActivation(mapToDomain(clientEntity.getInfoActivation()));

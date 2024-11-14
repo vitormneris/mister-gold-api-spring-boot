@@ -1,4 +1,4 @@
-package com.mistergold.mistergold.adapters.firebase;
+package com.mistergold.mistergold.adapters.upload;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Storage;

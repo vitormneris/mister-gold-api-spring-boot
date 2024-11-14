@@ -28,6 +28,7 @@ public class UpdateClientPersistenceService implements UpdateClientPort {
         clientOld.setName(clientNew.getName() == null ? clientOld.getName() : clientNew.getName());
         clientOld.setEmail(clientNew.getEmail() == null ? clientOld.getEmail() : clientNew.getEmail());
         clientOld.setPhone(clientNew.getPhone() == null ? clientOld.getPhone() : clientNew.getPhone());
+        clientOld.setCode(clientNew.getCode() == null ? clientOld.getCode() : clientNew.getCode());
 
         if (clientNew.getOrder() != null) {
             if (clientOld.getOrdersId() == null) clientOld.setOrdersId(new HashSet<>());
@@ -45,6 +46,15 @@ public class UpdateClientPersistenceService implements UpdateClientPort {
                     .complement(clientNew.getAddress().getComplement() == null ? clientOld.getAddress().getComplement() : clientNew.getAddress().getComplement())
                     .build());
 
+        return mapper.mapToDomain(clientRepository.save(clientOld));
+    }
+
+    @Override
+    public Client updatePassword(Client client, String id) {
+        ClientEntity clientOld = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(RunErrorEnum.ERR0001));
+
+        clientOld.setPassword(client.getPassword() == null ? clientOld.getPassword() : client.getPassword());
+        clientOld.setCode(null);
         return mapper.mapToDomain(clientRepository.save(clientOld));
     }
 }

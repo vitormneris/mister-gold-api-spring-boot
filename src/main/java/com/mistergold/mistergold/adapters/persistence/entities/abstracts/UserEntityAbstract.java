@@ -21,6 +21,11 @@ public abstract class UserEntityAbstract {
     protected String password;
     @Field(name = "papel")
     protected UserRoleEnum role;
+    @Field(name = "codigo")
+    protected String code;
     @Field(name = "status_ativacao")
     protected InfoActivationEntity infoActivation;
 }
+
+
+

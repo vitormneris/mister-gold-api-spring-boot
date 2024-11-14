@@ -6,5 +6,5 @@ import com.mistergold.mistergold.application.domain.client.Client;
 public interface SearchClientUseCase {
     PageResponse<Client> findByPagination(Boolean isActive, Integer page, Integer pageSize, String name);
     Client findById(String id);
-    Client findByEmail(String email);
+    void recoveryPasswordGenerator(String email);
 }

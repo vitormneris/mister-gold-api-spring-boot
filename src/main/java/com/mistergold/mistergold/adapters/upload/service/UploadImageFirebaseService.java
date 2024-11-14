@@ -1,4 +1,4 @@
-package com.mistergold.mistergold.adapters.firebase.service;
+package com.mistergold.mistergold.adapters.upload.service;
 
 import com.mistergold.mistergold.application.ports.out.upload_image.UploadImagePort;
 import com.mistergold.mistergold.configuration.web.advice.exception.InternalError;

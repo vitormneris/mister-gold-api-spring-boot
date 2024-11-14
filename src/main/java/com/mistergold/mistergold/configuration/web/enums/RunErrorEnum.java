@@ -17,7 +17,9 @@ public enum RunErrorEnum {
     ERR0009("ORDER_NOT_FOUND",  "O pedido não foi encontrada."),
     ERR0010("ORDER_STATUS_INVALID",  "O status de pedido informado é inválido."),
     ERR0011("USER_NOT_FOUND",  "O e-mail informado não existe na base de dados."),
-    ERR0012("UPLOAD_IMAGE_ERROR",  "Houve um error ao fazer o upload da imagem.");
+    ERR0012("UPLOAD_IMAGE_ERROR",  "Houve um error ao fazer o upload da imagem."),
+    ERR0013("INVALID_CODE",  "O código inserido não é válido. Por razões de segurança você terá que solicitar um novo e-mail."),
+    ERR0014("CODE_IS_NULL",  "Você terá que solicitar um novo e-mail.");
 
 
     private final String code;

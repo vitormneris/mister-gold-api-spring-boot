@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.mistergold.mistergold.configuration.web.advice.exception.ArgumentInvalidException;
-import feign.FeignException;
+import com.mistergold.mistergold.configuration.web.advice.exception.NotAuthorizationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -95,5 +95,20 @@ public class ExceptionHandlerController {
                 .build();
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessageResponseDTO);
+    }
+
+    @ExceptionHandler(NotAuthorizationException.class)
+    public ResponseEntity<ErrorMessageResponseDTO> notAuthorization(NotAuthorizationException exception, HttpServletRequest request) {
+        RunErrorEnum runErrorEnum = exception.getRunErrorEnum();
+
+        ErrorMessageResponseDTO errorMessageResponseDTO = ErrorMessageResponseDTO.builder()
+                .code(runErrorEnum.getCode())
+                .message(runErrorEnum.getMessage())
+                .timestamp(Instant.now())
+                .path(request.getRequestURI())
+                .fields(Collections.emptyList())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorMessageResponseDTO);
     }
 }

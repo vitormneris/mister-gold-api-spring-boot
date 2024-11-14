@@ -48,18 +48,19 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.PUT, "/clientes/{id}/atualizar").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.POST, "/clientes/salvar").permitAll()
                         .requestMatchers(HttpMethod.GET, "/clientes/{id}/id").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/clientes/{email}/recuperacao").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/clientes/{email}/recuperacao/codigo").permitAll()
                         .requestMatchers(HttpMethod.GET, "/clientes").hasRole("ADMINISTRATOR")
 
                         .requestMatchers(HttpMethod.DELETE, "/administradores/{id}/deletar").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.DELETE, "/administradores/{id}/desativar").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.PUT, "/administradores/{id}/atualizar").hasRole("ADMINISTRATOR")
-                        .requestMatchers(HttpMethod.POST, "/administradores/salvar").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.POST, "/administradores/salvar").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.GET, "/administradores/{id}/id").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.GET, "/administradores").hasRole("ADMINISTRATOR")
 
                         .requestMatchers(HttpMethod.POST, "/pedidos/salvar").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.GET, "/pedidos").hasRole("CLIENT")
-
 
                         .requestMatchers(HttpMethod.POST, "/autorizacao/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/autorizacao/token/cliente").hasRole("CLIENT")

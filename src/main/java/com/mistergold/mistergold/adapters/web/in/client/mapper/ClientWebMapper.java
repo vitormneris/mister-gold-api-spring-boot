@@ -5,11 +5,13 @@ import com.mistergold.mistergold.adapters.web.in.InfoActivationDTO;
 import com.mistergold.mistergold.adapters.web.in.category.dto.CategoryDTO;
 import com.mistergold.mistergold.adapters.web.in.client.dto.AddressDTO;
 import com.mistergold.mistergold.adapters.web.in.client.dto.ClientDTO;
+import com.mistergold.mistergold.adapters.web.in.client.dto.RecoveryDTO;
 import com.mistergold.mistergold.adapters.web.in.order.dto.OrderDTO;
 import com.mistergold.mistergold.adapters.web.in.order.dto.OrderItemDTO;
 import com.mistergold.mistergold.adapters.web.in.product.dto.ProductDTO;
 import com.mistergold.mistergold.application.domain.InfoActivation;
 import com.mistergold.mistergold.application.domain.PageResponse;
+import com.mistergold.mistergold.application.domain.abstracts.Recovery;
 import com.mistergold.mistergold.application.domain.client.Address;
 import com.mistergold.mistergold.application.domain.client.Client;
 
@@ -112,6 +114,8 @@ public interface ClientWebMapper {
         return null;
     }
 
+    RecoveryDTO mapToDTO(Recovery recovery);
+    Recovery mapToDomain(RecoveryDTO recoveryDTO);
     Address mapToDomain(AddressDTO addressDTO);
     AddressDTO mapToDTO(Address address);
     PageResponseDTO<ClientDTO> mapToPageResponseDto(PageResponse<Client> pageResponse);
