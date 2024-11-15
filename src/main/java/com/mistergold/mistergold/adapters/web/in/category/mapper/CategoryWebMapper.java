@@ -23,11 +23,7 @@ public interface CategoryWebMapper {
                 .description(product.getDescription())
                 .imageUrl(product.getImageUrl())
                 .price(product.getPrice())
-                .size(product.getSize())
-                .color(product.getColor())
-                .weight(product.getWeight())
                 .quantity(product.getQuantity())
-                .material(product.getMaterial())
                 .infoActivation(mapToDTO(product.getInfoActivation()))
                 .build()).collect(Collectors.toSet());
 

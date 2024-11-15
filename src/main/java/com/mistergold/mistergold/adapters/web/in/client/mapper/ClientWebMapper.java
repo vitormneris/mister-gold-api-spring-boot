@@ -75,11 +75,7 @@ public interface ClientWebMapper {
                         .description(orderItem.getProduct().getDescription())
                         .imageUrl(orderItem.getProduct().getImageUrl())
                         .price(orderItem.getProduct().getPrice())
-                        .size(orderItem.getProduct().getSize())
-                        .color(orderItem.getProduct().getColor())
-                        .weight(orderItem.getProduct().getWeight())
                         .quantity(orderItem.getProduct().getQuantity())
-                        .material(orderItem.getProduct().getMaterial())
                         .categories(categoryDTOS)
                         .infoActivation(mapToDTO(orderItem.getProduct().getInfoActivation()))
                         .build();

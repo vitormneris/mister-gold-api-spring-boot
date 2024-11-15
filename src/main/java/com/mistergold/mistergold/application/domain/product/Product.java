@@ -16,10 +16,6 @@ public class Product {
     private String id;
     private String name;
     private String imageUrl;
-    private Double size;
-    private String color;
-    private Double weight;
-    private String material;
     private String description;
     private Double price;
     private Integer quantity;

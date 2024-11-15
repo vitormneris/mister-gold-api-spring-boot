@@ -33,11 +33,7 @@ public interface ProductWebMapper {
                 .description(product.getDescription())
                 .imageUrl(product.getImageUrl())
                 .price(product.getPrice())
-                .size(product.getSize())
-                .color(product.getColor())
-                .weight(product.getWeight())
                 .quantity(product.getQuantity())
-                .material(product.getMaterial())
                 .categories(categoryDTOS)
                 .infoActivation(mapToDTO(product.getInfoActivation()))
                 .build();
@@ -50,11 +46,7 @@ public interface ProductWebMapper {
                 .description(productDTO.description())
                 .imageUrl(productDTO.imageUrl())
                 .price(productDTO.price())
-                .size(productDTO.size())
-                .color(productDTO.color())
-                .weight(productDTO.weight())
                 .quantity(productDTO.quantity())
-                .material(productDTO.material())
                 .categories(productDTO.categories().stream().map((categoryDTO) -> Category.builder().id(categoryDTO.id()).build()).collect(Collectors.toSet()))
                 .infoActivation(mapToDomain(productDTO.infoActivation()))
                 .build();

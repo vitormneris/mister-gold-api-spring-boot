@@ -24,13 +24,6 @@ public class ProductEntity {
     private String imageUrl;
     @Field(name = "descricao")
     private String description;
-    @Field(name = "tamanho")
-    private Double size;
-    @Field(name = "cor")
-    private String color;
-    @Field(name = "peso")
-    private Double weight;
-    private String material;
     @Field(name = "preco")
     private Double price;
     @Field(name = "quantidade")
