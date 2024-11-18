@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface AdministratorPersistenceMapper {
-    List<Administrator> mapListToDomain(List<AdministratorEntity> entities);
+    Set<Administrator> mapListToDomain(Set<AdministratorEntity> entities);
     AdministratorEntity mapToEntity(Administrator administrator);
     Administrator mapToDomain(AdministratorEntity administratorEntity);
 

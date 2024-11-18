@@ -10,6 +10,7 @@ import com.mistergold.mistergold.application.ports.out.administrator.SearchAdmin
 import com.mistergold.mistergold.application.ports.out.client.SaveClientPort;
 import com.mistergold.mistergold.application.ports.out.client.SearchClientPort;
 import com.mistergold.mistergold.configuration.web.advice.exception.DataIntegratyViolationException;
+import com.mistergold.mistergold.configuration.web.advice.exception.NotAuthorizationException;
 import com.mistergold.mistergold.configuration.web.enums.RunErrorEnum;
 import com.mistergold.mistergold.configuration.web.enums.UserRoleEnum;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,8 @@ public class SaveAdministratorService implements SaveAdministratorUseCase {
     @Override
     public Administrator save(Administrator administrator) {
         administrator.setId(null);
+
+        if (searchAdministratorPort.findAll().size() >= 5) throw new DataIntegratyViolationException(RunErrorEnum.ERR0015);
 
         if (searchAdministratorPort.checkEmailExists(administrator.getEmail())) throw new DataIntegratyViolationException(RunErrorEnum.ERR0002);
 

@@ -11,18 +11,18 @@ import java.util.Set;
 @Builder
 public record ProductDTO(
         String id,
-        @NotBlank(message = "O campo 'Nome' deve ser preenchido.")
+        @NotBlank(message = "Nome")
         String name,
         String imageUrl,
-        @NotBlank(message = "O campo 'Descrição' deve ser preenchido.")
+        @NotBlank(message = "Descrição")
         String description,
-        @NotNull(message = "O campo 'Preço' não deve ser nulo.")
-        @PositiveOrZero(message = "O campo 'Preço' não deve receber valores negativos.")
+        @NotNull(message = "Preço")
+        @PositiveOrZero(message = "Preço")
         Double price,
-        @NotNull(message = "O campo 'Quantidade' não deve ser nulo.")
-        @PositiveOrZero(message = "O campo 'Quantidade' não deve receber valores negativos.")
+        @NotNull(message = "Quantidade")
+        @PositiveOrZero(message = "Quantidade")
         Integer quantity,
-        @Size(min = 1, message = "O campo 'Categorias' deve ter ao menos uma categoria associada.")
+        @Size(min = 1, message = "Categoria")
         Set<CategoryDTO> categories,
         InfoActivationDTO infoActivation
 ) {

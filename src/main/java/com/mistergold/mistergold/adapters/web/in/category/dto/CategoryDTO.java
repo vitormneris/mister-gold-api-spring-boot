@@ -10,10 +10,10 @@ import java.util.Set;
 @Builder
 public record CategoryDTO(
         String id,
-        @NotBlank(message = "O campo 'Nome' deve ser preenchido.")
+        @NotBlank(message = "Nome")
         String name,
         String imageUrl,
-        @NotBlank(message = "O campo 'Descrição' deve ser preenchido.")
+        @NotBlank(message = "Descrição")
         String description,
         Set<ProductDTO> products,
         InfoActivationDTO infoActivation

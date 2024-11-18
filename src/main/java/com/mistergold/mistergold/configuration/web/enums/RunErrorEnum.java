@@ -19,7 +19,9 @@ public enum RunErrorEnum {
     ERR0011("USER_NOT_FOUND",  "O e-mail informado não existe na base de dados."),
     ERR0012("UPLOAD_IMAGE_ERROR",  "Houve um error ao fazer o upload da imagem."),
     ERR0013("INVALID_CODE",  "O código inserido não é válido. Por razões de segurança você terá que solicitar um novo e-mail."),
-    ERR0014("CODE_IS_NULL",  "Você terá que solicitar um novo e-mail.");
+    ERR0014("CODE_IS_NULL",  "Você terá que solicitar um novo e-mail."),
+    ERR0015("ADMINISTRATOR_NUMBER_MAXIMIUM",  "Número máximo de 5 de administradores atingido."),
+    ERR0016("ADMINISTRATOR_NUMBER_MINIMUM",  "Está é a última conta de administrador do sistema e não pode ser deletada.");
 
 
     private final String code;

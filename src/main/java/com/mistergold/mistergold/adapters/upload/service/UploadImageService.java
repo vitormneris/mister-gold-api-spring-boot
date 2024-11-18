@@ -14,20 +14,20 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class UploadImageFirebaseService implements UploadImagePort {
+public class UploadImageService implements UploadImagePort {
 
-    String url1 = "/home/vitor/college/interdiscipline_project/mistergold_frontend/images/upload/";
-    String url2 = "/home/vitor/college/interdiscipline_project/MisterGoldFrontEndAdministrator/images/upload/";
+    String url1 = "/home/vitor/college/interdiscipline_project/mistergold_frontend";
+    String url2 = "/home/vitor/college/interdiscipline_project/MisterGoldFrontEndAdministrator";
 
     public String uploadImage(MultipartFile file) {
         String fileName = UUID.randomUUID() + extensionImage(Objects.requireNonNull(file.getOriginalFilename()));
         try {
             byte[] bytes = file.getBytes();
 
-            Path path1 = Paths.get(url1 + fileName);
+            Path path1 = Paths.get(url1 + "/images/upload/"  + fileName);
             Files.write(path1, bytes);
 
-            Path path2 = Paths.get(url2 + fileName);
+            Path path2 = Paths.get(url2 + "/images/upload/" + fileName);
             Files.write(path2, bytes);
         } catch (IOException e) {
             throw new InternalErrorException(RunErrorEnum.ERR0012);
