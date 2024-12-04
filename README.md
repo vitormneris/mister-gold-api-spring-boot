@@ -6,10 +6,10 @@ Projeto da faculdade FATEC Itaquera, ministrado pela professora Viviane de Olive
 &nbsp;
 Abaixo está o link dos repositórios que compôem esse projeto:
 
-# front-end para o cliente
+### front-end para o cliente
 &nbsp;
 https://github.com/vitormneris/mister-gold-front-mdbootstrap-javascript
 
-# front-end para o administrador
+### front-end para o administrador
 &nbsp;
 https://github.com/vitormneris/mister-gold-front-adm-mdbootstrap-javascript
