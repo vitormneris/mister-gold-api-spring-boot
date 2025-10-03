@@ -1,15 +1,24 @@
-## Projeto Mister Gold com Java e Spring Boot
+# Mister Gold – API RESTful com Java e Spring Boot
 
-&nbsp;
-Projeto da faculdade FATEC Itaquera, ministrado pela professora Viviane de Oliveira. É um projeto de e-commerce simples com as entidades categoria, produto, pedido, cliente e administrador em relacionamento, mas este repositório não é o projeto completo, aqui está a API RESTFul, ou seja, o back-end. Nesta API foi usado, Java, Spring Boot, Spring Secutity, JWT, Docker, JavaEmailSender, tudo isto construido na arquitetura Hexagonal.
+Este é o **back-end** do projeto de e-commerce **Mister Gold**, desenvolvido para a disciplina da FATEC Itaquera sob orientação da professora **Viviane de Oliveira**.  
 
-&nbsp;
-Abaixo está o link dos repositórios que compôem esse projeto:
+O projeto é um e-commerce simples, com entidades como **Categoria**, **Produto**, **Pedido**, **Cliente** e **Administrador** em relacionamento. Este repositório contém apenas a API RESTful; o front-end está em repositórios separados.  
 
-### front-end para o cliente
-&nbsp;
-https://github.com/vitormneris/mister-gold-front-mdbootstrap-javascript
+A API foi desenvolvida utilizando as seguintes tecnologias e conceitos:  
 
-### front-end para o administrador
-&nbsp;
-https://github.com/vitormneris/mister-gold-front-adm-mdbootstrap-javascript
+- **Java 21 LTS**  
+- **Spring Boot**  
+- **Spring Security com JWT**  
+- **Docker & Docker Compose**  
+- **JavaMailSender**  
+- **Arquitetura Hexagonal**  
+
+---
+
+## Repositórios complementares
+
+### Front-end do cliente
+[https://github.com/vitormneris/mister-gold-front-end-customer](https://github.com/vitormneris/mister-gold-front-end-customer)
+
+### Front-end do administrador
+[https://github.com/vitormneris/mister-gold-front-end-adm](https://github.com/vitormneris/mister-gold-front-end-adm)
